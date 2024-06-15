@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movie_app_project/repository/repository.dart';
 
+import '../entity/media_type.dart';
 import '../entity/movie.dart';
 import '../env/env.dart';
 
