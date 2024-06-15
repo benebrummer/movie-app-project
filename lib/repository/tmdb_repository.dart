@@ -9,7 +9,7 @@ import '../env/env.dart';
 
 class MediaRepository extends TmdbRepository {
   final String apiKey = Env.tmdbApiKey;
-  final String baseUrl = 'https://api.themoviedb.org/3/';
+  static const String baseUrl = 'https://api.themoviedb.org/3/';
 
   @override
   Future<List<Movie>> searchMovie(final String query) async {
