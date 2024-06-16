@@ -11,9 +11,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
-
   envied: ^0.5.4+1
   http: ^1.2.1
+  tmdb_api: ^2.2.0
 
 dev_dependencies:
   flutter_test:
