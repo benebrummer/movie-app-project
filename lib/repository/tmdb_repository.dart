@@ -47,8 +47,7 @@ class MediaRepository extends TmdbRepository {
   @override
   Future<List<Review>> getMovieReviews(final int movieId) async {
     final Map response = await tmdbClient.v3.movies.getReviews(movieId);
-    final List<dynamic> results = response['results'];
-    return results.map((json) => Review.fromJson(json)).toList();
+    return _mapResultsToReviewList(response);
   }
 
   @override
@@ -84,8 +83,7 @@ class MediaRepository extends TmdbRepository {
   @override
   Future<List<Review>> getSeriesReviews(final int seriesId) async {
     final Map response = await tmdbClient.v3.tv.getReviews(seriesId);
-    final List<dynamic> results = response['results'];
-    return results.map((json) => Review.fromJson(json)).toList();
+    return _mapResultsToReviewList(response);
   }
 
   Future<List<Movie>> _mapResultsToMovieList(final Map response) async {
@@ -96,5 +94,10 @@ class MediaRepository extends TmdbRepository {
   Future<List<TvSeries>> _mapResultsToSeriesList(final Map response) async {
     final List<dynamic> results = response['results'];
     return results.map((json) => TvSeries.fromJson(json)).toList();
+  }
+
+  Future<List<Review>> _mapResultsToReviewList(final Map response) async {
+    final List<dynamic> results = response['results'];
+    return results.map((json) => Review.fromJson(json)).toList();
   }
 }
