@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app_project/pages/search/search_page.dart';
 
 void main() {
   runApp(const MovieApp());
@@ -16,8 +17,11 @@ class MovieApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Scaffold(
-        body: Center(
-          child: Text('Flutter Demo Home Page'),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: SearchPage(),
+          ),
         ),
       ),
     );
