@@ -6,7 +6,7 @@ import 'package:tmdb_api/tmdb_api.dart';
 import '../entity/movie.dart';
 
 class MediaSearchController extends GetxController {
-  final MediaRepository _mediaRepository = Get.put(MediaRepository());
+  final MediaRepository _mediaRepository = Get.find<MediaRepository>();
 
   static const List<(SearchCategory, String)> _searchCategories =
       <(SearchCategory, String)>[
@@ -21,19 +21,28 @@ class MediaSearchController extends GetxController {
   final _seriesSearchResults = <TvSeries>[].obs;
 
   List<bool> get selectedCategories => _selectedCategories;
+
   SearchCategory get selectedCategory => _selectedCategory;
+
   List<(SearchCategory, String)> get searchCategories => _searchCategories;
+
   String get currentlySelected {
     final int index = _selectedCategories.indexOf(true);
     return _searchCategories[index].$2;
   }
 
   List<Movie> get movieSearchResults => _movieSearchResults;
+
   List<TvSeries> get seriesSearchResults => _seriesSearchResults;
+
   bool get isSearching => _isSearching.value;
 
-  set movieSearchResults(List<Movie> value) => _movieSearchResults.value = value;
-  set seriesSearchResults(List<TvSeries> value) => _seriesSearchResults.value = value;
+  set movieSearchResults(List<Movie> value) =>
+      _movieSearchResults.value = value;
+
+  set seriesSearchResults(List<TvSeries> value) =>
+      _seriesSearchResults.value = value;
+
   set isSearching(bool value) => _isSearching.value = value;
 
   void updateSelectedCategory(final int index) {
@@ -46,7 +55,9 @@ class MediaSearchController extends GetxController {
   void searchMedia(final String query) {
     final int index = _selectedCategories.indexOf(true);
     final SearchCategory current = _searchCategories[index].$1;
-    current == SearchCategory.movies ? _searchMovies(query) : _searchSeries(query);
+    current == SearchCategory.movies
+        ? _searchMovies(query)
+        : _searchSeries(query);
   }
 
   void _searchMovies(final String query) {

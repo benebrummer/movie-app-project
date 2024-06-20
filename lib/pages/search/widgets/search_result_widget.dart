@@ -14,17 +14,29 @@ class SearchResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
+      child: ListView.separated(
         // TODO: keep items alive to prevent reloading images?
+
         itemBuilder: (BuildContext context, int index) {
           if (controller.selectedCategory == SearchCategory.movies) {
             final Movie movie = controller.movieSearchResults[index];
-            return SearchResultItem(posterPath: movie.posterPath, title: movie.title, releaseDate: movie.releaseDate,);
+            return SearchResultItem(
+              posterPath: movie.posterPath,
+              title: movie.title,
+              releaseDate: movie.releaseDate,
+            );
           }
           final TvSeries series = controller.seriesSearchResults[index];
-          return SearchResultItem(posterPath: series.posterPath, title: series.name, releaseDate: series.firstAirDate,);
+          return SearchResultItem(
+            posterPath: series.posterPath,
+            title: series.name,
+            releaseDate: series.firstAirDate,
+          );
         },
         itemCount: controller.movieSearchResults.length,
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
+        },
       ),
     );
   }

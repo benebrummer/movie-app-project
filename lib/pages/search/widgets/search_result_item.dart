@@ -5,28 +5,57 @@ class SearchResultItem extends StatelessWidget {
   final String posterPath;
   final String title;
   final String releaseDate;
-  const SearchResultItem({super.key, required this.posterPath, required this.title, required this.releaseDate,});
+
+  const SearchResultItem({
+    super.key,
+    required this.posterPath,
+    required this.title,
+    required this.releaseDate,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 200,
       decoration: BoxDecoration(
         border: Border.all(),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Row(
+            Column(
               children: [
-                posterPath.isEmpty ? Icon(Icons.image, size: 50,) :
-                Image.network('https://image.tmdb.org/t/p/original$posterPath', height: 150, width: 100),
-                const SizedBox(width: 30,),
-                Text(title, style: TextStyle(fontSize: 20),),
+                posterPath.isEmpty
+                    ? const Icon(
+                        Icons.image,
+                        size: 50,
+                      )
+                    : Image.network(
+                        'https://image.tmdb.org/t/p/original$posterPath',
+                        height: 150,
+                        width: 100,
+                      ),
+                const Spacer(),
+                Text(
+                  releaseDate,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
               ],
             ),
-            Text(releaseDate),
+            const SizedBox(width: 30),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ],
         ),
       ),

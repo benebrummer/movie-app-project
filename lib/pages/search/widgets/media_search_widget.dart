@@ -24,6 +24,7 @@ class MediaSearchWidget extends StatelessWidget {
               onSubmitted: (String value) {
                 controller.searchMedia(value);
               },
+              onChanged: (String value) {},
             );
           },
         ),
