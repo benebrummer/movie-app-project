@@ -22,7 +22,7 @@ class MediaSearchWidget extends StatelessWidget {
               ],
               hintText: 'Search ${controller.currentlySelected}',
               onSubmitted: (String value) {
-                controller.searchMovies(value);
+                controller.searchMedia(value);
               },
             );
           },
@@ -41,7 +41,7 @@ class MediaSearchWidget extends StatelessWidget {
                   onPressed: (int index) {
                     controller.updateSelectedCategory(index);
                   },
-                  isSelected: controller.selectedCategory,
+                  isSelected: controller.selectedCategories,
                   children: controller.searchCategories
                       .map(((SearchCategory, String) category) =>
                           Text(category.$2))
