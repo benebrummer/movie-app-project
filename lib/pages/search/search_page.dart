@@ -12,13 +12,17 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const MediaSearchWidget(),
         const SizedBox(height: 20),
         Obx(() {
           return controller.isSearching
-              ? const CircularProgressIndicator()
+              ? const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
               : SearchResultWidget();
         }),
       ],

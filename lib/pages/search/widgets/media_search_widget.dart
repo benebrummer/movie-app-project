@@ -22,9 +22,12 @@ class MediaSearchWidget extends StatelessWidget {
               ],
               hintText: 'Search ${controller.currentlySelected}',
               onSubmitted: (String value) {
+                if (value.isEmpty) return;
                 controller.searchMedia(value);
               },
-              onChanged: (String value) {},
+              onChanged: (String value) {
+                controller.searchQuery = value;
+              },
             );
           },
         ),

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:movie_app_project/entity/tv_series.dart';
 import 'package:movie_app_project/repository/tmdb_repository.dart';
-import 'package:tmdb_api/tmdb_api.dart';
 
 import '../entity/movie.dart';
 
@@ -16,7 +15,9 @@ class MediaSearchController extends GetxController {
 
   final List<bool> _selectedCategories = List.of({true, false});
   SearchCategory _selectedCategory = SearchCategory.movies;
+  String searchQuery = '';
   final _isSearching = false.obs;
+  final _resultCount = 0.obs; // TODO: observable really needed here?
   final _movieSearchResults = <Movie>[].obs;
   final _seriesSearchResults = <TvSeries>[].obs;
 
@@ -32,51 +33,59 @@ class MediaSearchController extends GetxController {
   }
 
   List<Movie> get movieSearchResults => _movieSearchResults;
-
   List<TvSeries> get seriesSearchResults => _seriesSearchResults;
-
   bool get isSearching => _isSearching.value;
+  int get resultCount => _resultCount.value;
 
   set movieSearchResults(List<Movie> value) =>
       _movieSearchResults.value = value;
-
   set seriesSearchResults(List<TvSeries> value) =>
       _seriesSearchResults.value = value;
-
   set isSearching(bool value) => _isSearching.value = value;
+  set resultCount(int value) => _resultCount.value = value;
 
   void updateSelectedCategory(final int index) {
     _selectedCategories.fillRange(0, _selectedCategories.length, false);
     _selectedCategories[index] = true;
     _selectedCategory = _searchCategories[index].$1;
+
+    if (searchQuery.isNotEmpty) {
+      searchMedia(searchQuery);
+    }
     update();
   }
 
   void searchMedia(final String query) {
-    final int index = _selectedCategories.indexOf(true);
-    final SearchCategory current = _searchCategories[index].$1;
+    searchQuery = query;
+    resultCount = 0;
+    final SearchCategory current = _selectedCategory;
     current == SearchCategory.movies
         ? _searchMovies(query)
         : _searchSeries(query);
   }
 
-  void _searchMovies(final String query) {
+  Future<void> _searchMovies(final String query) async {
     isSearching = true;
-    Future<List<Movie>> queriedMovies = _mediaRepository.searchMovie(query);
-    queriedMovies.then((List<Movie> movies) {
-      isSearching = false;
-      movieSearchResults = movies;
-    });
+    final queriedMovies = await _mediaRepository.searchMovie(query);
+    if (queriedMovies.isNotEmpty) {
+      resultCount = queriedMovies.length;
+      movieSearchResults = queriedMovies;
+    }
+    isSearching = false;
   }
 
-  void _searchSeries(final String query) {
+  void _searchSeries(final String query) async {
     isSearching = true;
-    Future<List<TvSeries>> queriedSeries = _mediaRepository.searchSeries(query);
-    queriedSeries.then((List<TvSeries> series) {
-      isSearching = false;
-      seriesSearchResults = series;
-    });
+    final queriedSeries = await _mediaRepository.searchSeries(query);
+    if (queriedSeries.isNotEmpty) {
+      resultCount = queriedSeries.length;
+      seriesSearchResults = queriedSeries;
+    }
+    isSearching = false;
   }
 }
 
-enum SearchCategory { movies, tvShows }
+enum SearchCategory {
+  movies,
+  tvShows,
+}
