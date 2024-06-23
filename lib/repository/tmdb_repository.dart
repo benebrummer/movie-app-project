@@ -1,9 +1,11 @@
-import 'package:movie_app_project/entity/tv_series.dart';
+import 'package:movie_app_project/entity/media/series/series_details.dart';
+import 'package:movie_app_project/entity/media/series/tv_series.dart';
 import 'package:movie_app_project/repository/repository.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-import '../entity/movie.dart';
-import '../entity/review.dart';
+import '../entity/media/movie/movie.dart';
+import '../entity/media/movie/movie_details.dart';
+import '../entity/media/review/review.dart';
 import '../env/env.dart';
 
 class MediaRepository extends TmdbRepository {
@@ -12,10 +14,11 @@ class MediaRepository extends TmdbRepository {
   );
 
   @override
-  Future<List<Movie>> searchMovie(final String query) async {
-    // TODO: add paging
-    final Map response = await tmdbClient.v3.search.queryMovies(query);
-    return _mapResultsToMovieList(response);
+  Future<Map<dynamic, dynamic>> searchMovie(
+      final String query, final int page) async {
+    final Map response =
+        await tmdbClient.v3.search.queryMovies(query, page: page);
+    return response;
   }
 
   @override
@@ -51,9 +54,18 @@ class MediaRepository extends TmdbRepository {
   }
 
   @override
-  Future<List<TvSeries>> searchSeries(final String query) async {
-    final Map response = await tmdbClient.v3.search.queryTvShows(query);
-    return _mapResultsToSeriesList(response);
+  Future<MovieDetails> getMovieDetails(int movieId) async {
+    final Map<dynamic, dynamic> response =
+        await tmdbClient.v3.movies.getDetails(movieId);
+    return MovieDetails.fromJson(response);
+  }
+
+  @override
+  Future<Map<dynamic, dynamic>> searchSeries(
+      final String query, final int page) async {
+    final Map response =
+        await tmdbClient.v3.search.queryTvShows(query, page: page);
+    return response;
   }
 
   @override
@@ -78,6 +90,13 @@ class MediaRepository extends TmdbRepository {
   Future<List<TvSeries>> getAiringTodaySeries() async {
     final Map response = await tmdbClient.v3.tv.getAiringToday();
     return _mapResultsToSeriesList(response);
+  }
+
+  @override
+  Future<SeriesDetails> getSeriesDetails(int seriesId) async {
+    final Map<dynamic, dynamic> response =
+        await tmdbClient.v3.tv.getDetails(seriesId);
+    return SeriesDetails.fromJson(response);
   }
 
   @override

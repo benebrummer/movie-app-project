@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/search_controller.dart';
+import '../../../../controller/search_controller.dart';
 
 class MediaSearchWidget extends StatelessWidget {
-  const MediaSearchWidget({super.key});
+  MediaSearchWidget({super.key});
+
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,14 +15,18 @@ class MediaSearchWidget extends StatelessWidget {
         GetBuilder<MediaSearchController>(
           builder: (controller) {
             return SearchBar(
+              controller: _textEditingController,
               leading: const Icon(Icons.search),
+              hintText: 'Search ${controller.currentlySelected}',
               trailing: <Widget>[
                 IconButton(
                   icon: const Icon(Icons.clear),
-                  onPressed: () {},
+                  onPressed: () {
+                    _textEditingController.clear();
+                    // controller.resetSearchQuery(); // TODO: maybe not necessary
+                  },
                 ),
               ],
-              hintText: 'Search ${controller.currentlySelected}',
               onSubmitted: (String value) {
                 if (value.isEmpty) return;
                 controller.searchMedia(value);
