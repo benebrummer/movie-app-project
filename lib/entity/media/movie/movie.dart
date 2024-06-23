@@ -1,7 +1,7 @@
 class Movie {
   final bool adult;
   final String backdropPath;
-  final List<int> genreIds;
+  final List<int>? genreIds;
   final int id;
   final String originalLanguage;
   final String originalTitle;
@@ -17,7 +17,7 @@ class Movie {
   const Movie({
     required this.adult,
     required this.backdropPath,
-    required this.genreIds,
+    this.genreIds,
     required this.id,
     required this.originalLanguage,
     required this.originalTitle,
@@ -35,8 +35,9 @@ class Movie {
     return Movie(
       adult: json['adult'] ?? false,
       backdropPath: json['backdrop_path'] ?? '',
-      genreIds:
-          (json['genre_ids'] as List<dynamic>).map((e) => e as int).toList(),
+      genreIds: json['genre_ids'] != null
+          ? (json['genre_ids'] as List<dynamic>).map((e) => e as int).toList()
+          : null,
       id: json['id'] ?? 0,
       originalLanguage: json['original_language'] ?? '',
       originalTitle: json['original_title'] ?? '',
