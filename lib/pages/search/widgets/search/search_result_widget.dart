@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/controller/search_controller.dart';
-import 'package:movie_app_project/pages/search/widgets/search_result_movie.dart';
-import 'package:movie_app_project/pages/search/widgets/search_result_series.dart';
+import 'package:movie_app_project/pages/search/widgets/search/search_result_movie.dart';
+import 'package:movie_app_project/pages/search/widgets/search/search_result_series.dart';
 
-import '../../../entity/movie.dart';
-import '../../../entity/tv_series.dart';
+import '../../../../entity/media/movie/movie.dart';
+import '../../../../entity/media/series/tv_series.dart';
 
 class SearchResultWidget extends StatelessWidget {
   SearchResultWidget({super.key});
   final MediaSearchController controller = Get.find();
-  // TODO: add paging
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -27,8 +27,27 @@ class SearchResultWidget extends StatelessWidget {
           }
           return ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemCount: controller.resultCount,
+            itemCount: controller.resultCount + 1,
             itemBuilder: (BuildContext context, int index) {
+              if (index == controller.resultCount) {
+                return Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Visibility(
+                    visible: controller.currentPage < controller.totalPages,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        controller.loadMoreResults();
+                      },
+                      child: const Text(
+                        'Find more',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
               if (controller.selectedCategory == SearchCategory.movies) {
                 final Movie movie = controller.movieSearchResults[index];
                 return _createSearchResultMovie(movie);

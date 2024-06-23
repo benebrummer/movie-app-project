@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../entity/movie.dart';
+import '../../../../entity/media/movie/movie.dart';
+import '../details/movie_details_page.dart';
 
 class MovieResultItem extends StatelessWidget {
   final Movie movie;
@@ -14,8 +15,14 @@ class MovieResultItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: Implement navigation to movie details page. Maybe use Details endpoint.
-        print('Tapped: ${movie.title}');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return MovieDetailsPage(movie: movie);
+            },
+          ),
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(

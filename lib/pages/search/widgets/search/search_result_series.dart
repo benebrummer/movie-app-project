@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../entity/tv_series.dart';
+import '../../../../entity/media/series/tv_series.dart';
+import '../details/series_details_page.dart';
 
 class SeriesResultItem extends StatelessWidget {
   final TvSeries series;
@@ -14,8 +15,14 @@ class SeriesResultItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: Implement navigation to series details page. Maybe use Details endpoint.
-        print('Tapped: ${series.name}');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return SeriesDetailsPage(series: series);
+            },
+          ),
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(
