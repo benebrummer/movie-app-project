@@ -48,11 +48,11 @@ class DetailsCard extends StatelessWidget {
               statsWidget,
               const SizedBox(height: 20),
               const Divider(),
-              const Row(
+              Row(
                 children: [
                   Text(
-                    'Produced by:',
-                    style: TextStyle(fontSize: 16),
+                    'Produced by: ${producerCompanies.isEmpty ? '\n-' : ''}',
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ],
               ),
