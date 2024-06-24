@@ -54,7 +54,7 @@ class MediaSearchController extends GetxController {
   }
 
   String getSelectedMediaTypeString() {
-    return _selectedMediaType == MediaType.movie ? 'Movies' : 'TV Shows';
+    return _searchMediaTypes[_selectedMediaTypes.indexOf(true)].$2;
   }
 
   void searchMedia(final String query) {
