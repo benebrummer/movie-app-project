@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:movie_app_project/controller/search_controller.dart';
 import 'package:movie_app_project/pages/search/widgets/search/search_result_movie.dart';
 import 'package:movie_app_project/pages/search/widgets/search/search_result_series.dart';
+import 'package:tmdb_api/tmdb_api.dart';
 
 import '../../../../entity/media/movie/movie.dart';
 import '../../../../entity/media/series/tv_series.dart';
@@ -48,7 +49,7 @@ class SearchResultWidget extends StatelessWidget {
                   ),
                 );
               }
-              if (controller.selectedCategory == SearchCategory.movies) {
+              if (controller.selectedMediaType == MediaType.movie) {
                 final Movie movie = controller.movieSearchResults[index];
                 return _createSearchResultMovie(movie);
               }

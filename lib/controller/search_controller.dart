@@ -1,20 +1,21 @@
 import 'package:get/get.dart';
 import 'package:movie_app_project/entity/media/series/tv_series.dart';
 import 'package:movie_app_project/repository/tmdb_repository.dart';
+import 'package:tmdb_api/tmdb_api.dart';
 
 import '../entity/media/movie/movie.dart';
 
 class MediaSearchController extends GetxController {
   final MediaRepository _mediaRepository = Get.find<MediaRepository>();
 
-  static const List<(SearchCategory, String)> _searchCategories =
-      <(SearchCategory, String)>[
-    (SearchCategory.movies, 'Movies'),
-    (SearchCategory.tvShows, 'TV Shows'),
+  static const List<(MediaType, String)> _searchMediaTypes =
+      <(MediaType, String)>[
+    (MediaType.movie, 'Movies'),
+    (MediaType.tv, 'TV Shows'),
   ];
 
-  final List<bool> _selectedCategories = List.of({true, false});
-  SearchCategory _selectedCategory = SearchCategory.movies;
+  final List<bool> _selectedMediaTypes = List.of({true, false});
+  MediaType _selectedMediaType = MediaType.movie;
   String searchQuery = '';
   int _currentPage = 1;
   int _totalPages = 1;
@@ -23,20 +24,15 @@ class MediaSearchController extends GetxController {
   final _movieSearchResults = <Movie>[].obs;
   final _seriesSearchResults = <TvSeries>[].obs;
 
-  List<bool> get selectedCategories => _selectedCategories;
-  SearchCategory get selectedCategory => _selectedCategory;
-  List<(SearchCategory, String)> get searchCategories => _searchCategories;
+  List<bool> get selectedMediaTypes => _selectedMediaTypes;
+  MediaType get selectedMediaType => _selectedMediaType;
+  List<(MediaType, String)> get searchMediaTypes => _searchMediaTypes;
   List<Movie> get movieSearchResults => _movieSearchResults;
   List<TvSeries> get seriesSearchResults => _seriesSearchResults;
   bool get isSearching => _isSearching.value;
   int get resultCount => _resultCount.value;
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
-
-  String get currentlySelected {
-    final int index = _selectedCategories.indexOf(true);
-    return _searchCategories[index].$2;
-  }
 
   set movieSearchResults(List<Movie> value) =>
       _movieSearchResults.value = value;
@@ -47,9 +43,9 @@ class MediaSearchController extends GetxController {
 
   void updateSelectedCategory(final int index) {
     _resetPaging();
-    _selectedCategories.fillRange(0, _selectedCategories.length, false);
-    _selectedCategories[index] = true;
-    _selectedCategory = _searchCategories[index].$1;
+    _selectedMediaTypes.fillRange(0, _selectedMediaTypes.length, false);
+    _selectedMediaTypes[index] = true;
+    _selectedMediaType = _searchMediaTypes[index].$1;
 
     if (searchQuery.isNotEmpty) {
       searchMedia(searchQuery);
@@ -57,14 +53,16 @@ class MediaSearchController extends GetxController {
     update();
   }
 
+  String getSelectedMediaTypeString() {
+    return _selectedMediaType == MediaType.movie ? 'Movies' : 'TV Shows';
+  }
+
   void searchMedia(final String query) {
-    print('Searching $selectedCategory for page $_currentPage');
     _resetPaging();
     searchQuery = query;
     resultCount = 0;
-    final SearchCategory current = _selectedCategory;
     isSearching = true;
-    current == SearchCategory.movies
+    _selectedMediaType == MediaType.movie
         ? _searchMovies(query)
         : _searchSeries(query);
   }
@@ -97,7 +95,7 @@ class MediaSearchController extends GetxController {
     if (_currentPage >= _totalPages) {
       return;
     }
-    if (_selectedCategory == SearchCategory.movies) {
+    if (_selectedMediaType == MediaType.movie) {
       final response =
           await _mediaRepository.searchMovie(searchQuery, ++_currentPage);
       final List<Movie> movies = _mapResultsToMovieList(response);
@@ -130,9 +128,4 @@ class MediaSearchController extends GetxController {
     final List<dynamic> results = response['results'];
     return results.map((json) => TvSeries.fromJson(json)).toList();
   }
-}
-
-enum SearchCategory {
-  movies,
-  tvShows,
 }

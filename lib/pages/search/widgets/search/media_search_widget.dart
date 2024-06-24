@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tmdb_api/tmdb_api.dart';
 
 import '../../../../controller/search_controller.dart';
 
@@ -17,7 +18,7 @@ class MediaSearchWidget extends StatelessWidget {
             return SearchBar(
               controller: _textEditingController,
               leading: const Icon(Icons.search),
-              hintText: 'Search ${controller.currentlySelected}',
+              hintText: 'Search ${controller.getSelectedMediaTypeString()}',
               trailing: <Widget>[
                 IconButton(
                   icon: const Icon(Icons.clear),
@@ -51,10 +52,9 @@ class MediaSearchWidget extends StatelessWidget {
                   onPressed: (int index) {
                     controller.updateSelectedCategory(index);
                   },
-                  isSelected: controller.selectedCategories,
-                  children: controller.searchCategories
-                      .map(((SearchCategory, String) category) =>
-                          Text(category.$2))
+                  isSelected: controller.selectedMediaTypes,
+                  children: controller.searchMediaTypes
+                      .map(((MediaType, String) category) => Text(category.$2))
                       .toList());
             },
           ),
