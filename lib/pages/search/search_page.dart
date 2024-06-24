@@ -18,21 +18,26 @@ class SearchPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Search"),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          MediaSearchWidget(),
-          const SizedBox(height: 20),
-          Obx(() {
-            return controller.isSearching
-                ? const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : SearchResultWidget();
-          }),
-        ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(13.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MediaSearchWidget(),
+              const SizedBox(height: 20),
+              Obx(() {
+                return controller.isSearching
+                    ? const Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : SearchResultWidget();
+              }),
+            ],
+          ),
+        ),
       ),
     );
   }
