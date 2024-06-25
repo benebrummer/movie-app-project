@@ -68,7 +68,7 @@ class MediaSearchController extends GetxController {
   }
 
   Future<void> _searchMovies(final String query) async {
-    final response = await _mediaRepository.searchMovie(query, 1);
+    final response = await _mediaRepository.searchMovie(query, _currentPage);
     if (response.isEmpty) {
       return;
     }
