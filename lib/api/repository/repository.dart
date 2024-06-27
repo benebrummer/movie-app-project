@@ -1,9 +1,9 @@
 import 'package:movie_app_project/entity/media/movie/movie_details.dart';
 import 'package:movie_app_project/entity/media/series/series_details.dart';
 
-import '../entity/media/movie/movie.dart';
-import '../entity/media/review/review.dart';
-import '../entity/media/series/tv_series.dart';
+import '../../entity/media/movie/movie.dart';
+import '../../entity/media/review/review.dart';
+import '../../entity/media/series/tv_series.dart';
 
 abstract class TmdbRepository {
   // TODO: check discover endpoint

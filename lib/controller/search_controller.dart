@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:movie_app_project/entity/media/series/tv_series.dart';
-import 'package:movie_app_project/repository/tmdb_repository.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
+import '../api/repository/tmdb_repository.dart';
 import '../entity/media/movie/movie.dart';
 
 class MediaSearchController extends GetxController {

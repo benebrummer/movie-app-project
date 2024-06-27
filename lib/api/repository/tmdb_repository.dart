@@ -1,12 +1,12 @@
+import 'package:movie_app_project/api/repository/repository.dart';
 import 'package:movie_app_project/entity/media/series/series_details.dart';
 import 'package:movie_app_project/entity/media/series/tv_series.dart';
-import 'package:movie_app_project/repository/repository.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-import '../entity/media/movie/movie.dart';
-import '../entity/media/movie/movie_details.dart';
-import '../entity/media/review/review.dart';
-import '../env/env.dart';
+import '../../entity/media/movie/movie.dart';
+import '../../entity/media/movie/movie_details.dart';
+import '../../entity/media/review/review.dart';
+import '../../env/env.dart';
 
 class MediaRepository extends TmdbRepository {
   final tmdbClient = TMDB(
