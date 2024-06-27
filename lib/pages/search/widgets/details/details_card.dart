@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:movie_app_project/entity/media/production_company.dart';
 import 'package:movie_app_project/pages/search/widgets/details/details_header.dart';
 import 'package:tmdb_api/tmdb_api.dart';
+
+import '../../../../controller/details_controller.dart';
 
 class DetailsCard extends StatelessWidget {
   final String title;
@@ -12,7 +15,8 @@ class DetailsCard extends StatelessWidget {
   final List<ProductionCompany> producerCompanies;
   final String posterPath;
   final String tagline;
-  const DetailsCard({
+
+  DetailsCard({
     super.key,
     required this.title,
     required this.mediaType,
@@ -22,6 +26,8 @@ class DetailsCard extends StatelessWidget {
     required this.posterPath,
     required this.tagline,
   });
+
+  final DetailsController _detailsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -68,18 +74,28 @@ class DetailsCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: () {
-                    // TODO
+              Obx(
+                () => GestureDetector(
+                  child: Icon(
+                    _detailsController.isFavorite
+                        ? Icons.favorite
+                        : Icons.favorite_border_outlined,
+                    color: Colors.red,
+                    size: 50,
+                  ),
+                  onTap: () {
+                    if (mediaType == MediaType.movie) {
+                      _detailsController.isFavorite
+                          ? _detailsController.removeFavoriteMovie()
+                          : _detailsController.addFavoriteMovie();
+                    } else if (mediaType == MediaType.tv) {
+                      _detailsController.isFavorite
+                          ? _detailsController.removeFavoriteSeries()
+                          : _detailsController.addFavoriteSeries();
+                    }
                   },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.favorite),
-                      SizedBox(width: 5),
-                      Text('Add to favorites'),
-                    ],
-                  ))
+                ),
+              ),
             ],
           ),
         ),
