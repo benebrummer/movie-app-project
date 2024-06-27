@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/pages/browse/browse_page.dart';
 import 'package:movie_app_project/pages/favorites/favorites_page.dart';
-
 import '../controller/favorites_controller.dart';
 import '../pages/search/search_page.dart';
 
@@ -10,6 +10,7 @@ class MovieAppDrawer extends StatelessWidget {
   MovieAppDrawer({super.key});
 
   final FavoritesController _favoritesController = Get.find();
+  final BrowseController _browseController = Get.find<BrowseController>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class MovieAppDrawer extends StatelessWidget {
                   return SearchPage();
                 }),
               );
+              _browseController.browseMedia();
             },
           ),
           ListTile(

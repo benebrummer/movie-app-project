@@ -13,7 +13,6 @@ class BrowsePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.browseMedia();
     return Scaffold(
       drawer: MovieAppDrawer(),
       backgroundColor: Colors.grey[700],
