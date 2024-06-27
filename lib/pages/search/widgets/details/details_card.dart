@@ -8,6 +8,7 @@ import '../../../../controller/details_controller.dart';
 
 class DetailsCard extends StatelessWidget {
   final String title;
+
   // TODO: maybe remove SearchCategory and replace with MediaType
   final MediaType mediaType;
   final String overview;

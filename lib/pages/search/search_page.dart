@@ -14,7 +14,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const MovieAppDrawer(),
+      drawer: MovieAppDrawer(),
       appBar: AppBar(
         title: const Text("Search"),
       ),
