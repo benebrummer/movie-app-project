@@ -1,8 +1,18 @@
+import 'package:hive/hive.dart';
+
+part 'creator.g.dart';
+
+@HiveType(typeId: 7)
 class Creator {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String creditId;
+  @HiveField(2)
   final String name;
+  @HiveField(3)
   final int gender;
+  @HiveField(4)
   final String profilePath;
 
   Creator({

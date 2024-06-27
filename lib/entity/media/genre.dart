@@ -1,5 +1,12 @@
-class Genre {
+import 'package:hive/hive.dart';
+
+part 'genre.g.dart';
+
+@HiveType(typeId: 2)
+class Genre extends HiveObject {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String name;
 
   Genre({required this.id, required this.name});

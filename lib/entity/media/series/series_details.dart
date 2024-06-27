@@ -1,3 +1,4 @@
+import 'package:hive/hive.dart';
 import 'package:movie_app_project/entity/media/series/season.dart';
 
 import '../genre.dart';
@@ -8,38 +9,73 @@ import 'creator.dart';
 import 'episode.dart';
 import 'network.dart';
 
+part 'series_details.g.dart';
+
+@HiveType(typeId: 6)
 class SeriesDetails {
+  @HiveField(0)
   final bool adult;
+  @HiveField(1)
   final String backdropPath;
+  @HiveField(2)
   final List<Creator> createdBy;
+  @HiveField(3)
   final List<int> episodeRunTime;
+  @HiveField(4)
   final String firstAirDate;
+  @HiveField(5)
   final List<Genre> genres;
+  @HiveField(6)
   final String homepage;
+  @HiveField(7)
   final int id;
+  @HiveField(8)
   final bool inProduction;
+  @HiveField(9)
   final List<String> languages;
+  @HiveField(10)
   final String lastAirDate;
+  @HiveField(11)
   final Episode lastEpisodeToAir;
+  @HiveField(12)
   final String name;
+  @HiveField(13)
   final Episode? nextEpisodeToAir;
+  @HiveField(14)
   final List<Network> networks;
+  @HiveField(15)
   final int numberOfEpisodes;
+  @HiveField(16)
   final int numberOfSeasons;
+  @HiveField(17)
   final List<String> originCountry;
+  @HiveField(18)
   final String originalLanguage;
+  @HiveField(19)
   final String originalName;
+  @HiveField(20)
   final String overview;
+  @HiveField(21)
   final double popularity;
+  @HiveField(22)
   final String posterPath;
+  @HiveField(23)
   final List<ProductionCompany> productionCompanies;
+  @HiveField(24)
   final List<ProductionCountry> productionCountries;
+  @HiveField(25)
   final List<Season> seasons;
+  @HiveField(26)
   final List<Language> spokenLanguages;
+  @HiveField(27)
   final String status;
+  @HiveField(28)
   final String tagline;
+  @HiveField(29)
   final String type;
+  @HiveField(30)
   final double voteAverage;
+  @HiveField(31)
   final int voteCount;
 
   SeriesDetails({

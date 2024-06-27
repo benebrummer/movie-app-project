@@ -1,7 +1,16 @@
-class ProductionCompany {
+import 'package:hive/hive.dart';
+
+part 'production_company.g.dart';
+
+@HiveType(typeId: 3)
+class ProductionCompany extends HiveObject {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String logoPath;
+  @HiveField(2)
   final String name;
+  @HiveField(3)
   final String originCountry;
 
   ProductionCompany({

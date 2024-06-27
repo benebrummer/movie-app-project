@@ -1,15 +1,32 @@
+import 'package:hive/hive.dart';
+
+part 'episode.g.dart';
+
+@HiveType(typeId: 8)
 class Episode {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final String overview;
+  @HiveField(3)
   final double voteAverage;
+  @HiveField(4)
   final int voteCount;
+  @HiveField(5)
   final String airDate;
+  @HiveField(6)
   final int episodeNumber;
+  @HiveField(7)
   final String productionCode;
+  @HiveField(8)
   final int runtime;
+  @HiveField(9)
   final int seasonNumber;
+  @HiveField(10)
   final int showId;
+  @HiveField(11)
   final String stillPath;
 
   Episode({

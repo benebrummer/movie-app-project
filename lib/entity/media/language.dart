@@ -1,6 +1,14 @@
-class Language {
+import 'package:hive/hive.dart';
+
+part 'language.g.dart';
+
+@HiveType(typeId: 5)
+class Language extends HiveObject {
+  @HiveField(0)
   final String englishName;
+  @HiveField(1)
   final String iso6391;
+  @HiveField(2)
   final String name;
 
   Language({

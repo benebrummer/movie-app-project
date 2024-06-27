@@ -1,7 +1,16 @@
+import 'package:hive/hive.dart';
+
+part 'network.g.dart';
+
+@HiveType(typeId: 9)
 class Network {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String logoPath;
+  @HiveField(2)
   final String name;
+  @HiveField(3)
   final String originCountry;
 
   Network({

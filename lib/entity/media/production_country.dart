@@ -1,5 +1,12 @@
-class ProductionCountry {
+import 'package:hive/hive.dart';
+
+part 'production_country.g.dart';
+
+@HiveType(typeId: 4)
+class ProductionCountry extends HiveObject {
+  @HiveField(0)
   final String iso31661;
+  @HiveField(1)
   final String name;
 
   ProductionCountry({

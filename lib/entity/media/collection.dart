@@ -1,7 +1,16 @@
-class Collection {
+import 'package:hive/hive.dart';
+
+part 'collection.g.dart';
+
+@HiveType(typeId: 1)
+class Collection extends HiveObject {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final String posterPath;
+  @HiveField(3)
   final String backdropPath;
 
   Collection({

@@ -1,11 +1,24 @@
+import 'package:hive/hive.dart';
+
+part 'season.g.dart';
+
+@HiveType(typeId: 10)
 class Season {
+  @HiveField(0)
   final String firstAirDate;
+  @HiveField(1)
   final int episodeCount;
+  @HiveField(2)
   final int id;
+  @HiveField(3)
   final String name;
+  @HiveField(4)
   final String overview;
+  @HiveField(5)
   final String posterPath;
+  @HiveField(6)
   final int seasonNumber;
+  @HiveField(7)
   final int voteAverage;
 
   const Season({

@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:hive/hive.dart';
 import 'package:movie_app_project/entity/media/collection.dart';
 import 'package:movie_app_project/entity/media/language.dart';
 
@@ -7,34 +8,62 @@ import '../genre.dart';
 import '../production_company.dart';
 import '../production_country.dart';
 
-class MovieDetails {
+part 'movie_details.g.dart';
+
+@HiveType(typeId: 0)
+class MovieDetails extends HiveObject {
+  @HiveField(0)
   final bool adult;
+  @HiveField(1)
   final String backdropPath;
+  @HiveField(2)
   final Collection belongsToCollection;
+  @HiveField(3)
   final int budget;
+  @HiveField(4)
   final List<Genre> genres;
+  @HiveField(5)
   final String homepage;
+  @HiveField(6)
   final int id;
+  @HiveField(7)
   final String imdbId;
+  @HiveField(8)
   final String originalLanguage;
+  @HiveField(9)
   final String originalTitle;
+  @HiveField(10)
   final String overview;
+  @HiveField(11)
   final double popularity;
+  @HiveField(12)
   final String posterPath;
+  @HiveField(13)
   final List<ProductionCompany> productionCompanies;
+  @HiveField(14)
   final List<ProductionCountry> productionCountries;
+  @HiveField(15)
   final String releaseDate;
+  @HiveField(16)
   final int revenue;
+  @HiveField(17)
   final int runtime;
+  @HiveField(18)
   final List<Language> spokenLanguages;
+  @HiveField(19)
   final String status;
+  @HiveField(20)
   final String tagline;
+  @HiveField(21)
   final String title;
+  @HiveField(22)
   final bool video;
+  @HiveField(23)
   final double voteAverage;
+  @HiveField(24)
   final int voteCount;
 
-  const MovieDetails({
+  MovieDetails({
     required this.adult,
     required this.backdropPath,
     required this.belongsToCollection,
