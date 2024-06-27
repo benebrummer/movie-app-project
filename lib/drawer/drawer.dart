@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app_project/pages/browse/browse_page.dart';
 import 'package:movie_app_project/pages/favorites/favorites_page.dart';
 
 import '../controller/favorites_controller.dart';
@@ -39,7 +40,14 @@ class MovieAppDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Browse'),
             leading: const Icon(Icons.movie),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return BrowsePage();
+                }),
+              );
+            },
           ),
           ListTile(
             title: const Text('Favorites'),

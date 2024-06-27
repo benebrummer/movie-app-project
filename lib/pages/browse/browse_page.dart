@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/controller/browse_controller.dart';
+import 'package:movie_app_project/drawer/drawer.dart';
 import 'package:movie_app_project/pages/browse/widgets/category_selector.dart';
 import 'package:movie_app_project/pages/browse/widgets/movie_slider.dart';
 import 'package:movie_app_project/pages/browse/widgets/trending_slider.dart';
@@ -14,6 +15,7 @@ class BrowsePage extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.browseMedia();
     return Scaffold(
+      drawer: MovieAppDrawer(),
       backgroundColor: Colors.grey[700],
       appBar: AppBar(
         backgroundColor: Colors.amber,
