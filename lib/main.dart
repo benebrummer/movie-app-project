@@ -55,8 +55,8 @@ Future<void> _initializeDependencies() async {
     favoriteMoviesBox: movieBox,
     favoriteSeriesBox: seriesBox,
   ));
-  Get.put(FavoritesController());
   Get.put(MediaRepository());
+  Get.put(FavoritesController());
   Get.put(MediaSearchController());
   Get.put(DetailsController());
   Get.put(BrowseController());

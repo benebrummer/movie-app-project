@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:movie_app_project/controller/details_controller.dart';
+import 'package:movie_app_project/pages/browse/widgets/browse_details_movie.dart';
 
+import '../../../../controller/favorites_controller.dart';
 import '../../../../entity/media/movie/movie.dart';
-import '../details/movie_details_page.dart';
 
 class MovieResultItem extends StatelessWidget {
   final Movie movie;
 
-  const MovieResultItem({
+  MovieResultItem({
     super.key,
     required this.movie,
   });
 
+  final DetailsController _detailsController = Get.find();
+  final FavoritesController _favoritesController = Get.find();
+
   @override
   Widget build(BuildContext context) {
+    // TODO: Keep style of search results or change it to match browse page
+    //  (e.g. just show image and title)
     return GestureDetector(
       onTap: () {
+        _detailsController.initMovieDetails(movie.id);
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) {
-              return MovieDetailsPage(movie: movie);
+              return BrowseDetailsMovie(movie: movie);
             },
           ),
         );
@@ -38,10 +47,13 @@ class MovieResultItem extends StatelessWidget {
                       height: 150,
                       child: Icon(Icons.image),
                     )
-                  : Image.network(
-                      'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                      width: 100,
-                      height: 150,
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                        width: 100,
+                        height: 150,
+                      ),
                     ),
               const SizedBox(width: 30),
               Expanded(
@@ -99,6 +111,16 @@ class MovieResultItem extends StatelessWidget {
                             color: Colors.grey,
                           ),
                         ),
+                        const SizedBox(width: 10),
+                        _favoritesController.isMovieFavorite(movie.id)
+                            ? const Center(
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                  size: 15,
+                                ),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ],

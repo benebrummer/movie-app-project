@@ -15,7 +15,6 @@ class SeriesDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _detailsController.initSeriesDetails(series.id);
     return Scaffold(
       appBar: AppBar(
         title: Text(series.name),
