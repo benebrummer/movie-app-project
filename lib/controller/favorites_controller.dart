@@ -29,6 +29,11 @@ class FavoritesController extends GetxController {
     _selectedMediaTypes[index] = true;
   }
 
+  void getFavorites() {
+    getFavoriteMovies();
+    getFavoriteSeries();
+  }
+
   void getFavoriteMovies() {
     _favoriteMovies.clear();
     _favoriteMovies.addAll(_favoritesRepository.getAllFavoriteMovies());

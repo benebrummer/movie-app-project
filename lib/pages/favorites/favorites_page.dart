@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tmdb_api/tmdb_api.dart';
 import 'package:movie_app_project/controller/favorites_controller.dart';
 import 'package:movie_app_project/drawer/drawer.dart';
+import 'package:movie_app_project/entity/media/series/series_details.dart';
 
-import '../../controller/search_controller.dart';
 import '../../entity/media/movie/movie_details.dart';
 
 class FavoritesPage extends StatelessWidget {
@@ -46,16 +45,28 @@ class FavoritesPage extends StatelessWidget {
           const SizedBox(height: 20),
           Expanded(
             child: Obx(
-              () => ListView.builder(
-                itemCount: _favoritesController.movieCount.value,
-                itemBuilder: (context, index) {
-                  final MovieDetails movie =
-                      _favoritesController.favoriteMovies[index];
-                  return ListTile(
-                    title: Text(movie.title),
-                  );
-                },
-              ),
+              // TODO: refactor this to use a single ListView.builder or split in two widgets
+              () => _favoritesController.selectedMediaTypes[0]
+                  ? ListView.builder(
+                      itemCount: _favoritesController.movieCount.value,
+                      itemBuilder: (context, index) {
+                        final MovieDetails movie =
+                            _favoritesController.favoriteMovies[index];
+                        return ListTile(
+                          title: Text(movie.title),
+                        );
+                      },
+                    )
+                  : ListView.builder(
+                      itemCount: _favoritesController.seriesCount.value,
+                      itemBuilder: (context, index) {
+                        final SeriesDetails series =
+                            _favoritesController.favoriteSeries[index];
+                        return ListTile(
+                          title: Text(series.name),
+                        );
+                      },
+                    ),
             ),
           ),
         ],

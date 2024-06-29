@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/pages/browse/browse_page.dart';
 import 'package:movie_app_project/pages/favorites/favorites_page.dart';
+
+import '../controller/browse_controller.dart';
 import '../controller/favorites_controller.dart';
 import '../pages/search/search_page.dart';
 
@@ -36,7 +37,6 @@ class MovieAppDrawer extends StatelessWidget {
                   return SearchPage();
                 }),
               );
-              _browseController.browseMedia();
             },
           ),
           ListTile(
@@ -49,6 +49,8 @@ class MovieAppDrawer extends StatelessWidget {
                   return BrowsePage();
                 }),
               );
+              // TODO: moved browse page init data to the correct place
+              _browseController.browseMedia();
             },
           ),
           ListTile(
@@ -63,7 +65,7 @@ class MovieAppDrawer extends StatelessWidget {
                   },
                 ),
               );
-              _favoritesController.getFavoriteMovies();
+              _favoritesController.getFavorites();
             },
           ),
         ],
