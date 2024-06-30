@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
 import 'package:movie_app_project/controller/favorites_controller.dart';
+import 'package:movie_app_project/controller/review_controller.dart';
 import 'package:movie_app_project/controller/search_controller.dart';
 import 'package:movie_app_project/entity/media/collection.dart';
 import 'package:movie_app_project/entity/media/genre.dart';
@@ -56,6 +57,7 @@ Future<void> _initializeDependencies() async {
     favoriteSeriesBox: seriesBox,
   ));
   Get.put(MediaRepository());
+  Get.put(ReviewController());
   Get.put(FavoritesController());
   Get.put(MediaSearchController());
   Get.put(DetailsController());
