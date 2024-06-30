@@ -35,14 +35,12 @@ class MediaRepository extends TmdbRepository {
 
   @override
   Future<List<Movie>> getUpcomingMovies() async {
-    // TODO: dates in response?
     final Map response = await tmdbClient.v3.movies.getUpcoming();
     return _mapResultsToMovieList(response);
   }
 
   @override
   Future<List<Movie>> getNowPlayingMovies() async {
-    // TODO: dates in response?
     final Map response = await tmdbClient.v3.movies.getNowPlaying();
     return _mapResultsToMovieList(response);
   }
