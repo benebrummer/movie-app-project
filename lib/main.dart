@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
 import 'package:movie_app_project/controller/favorites_controller.dart';
+import 'package:movie_app_project/controller/images_controller.dart';
 import 'package:movie_app_project/controller/review_controller.dart';
 import 'package:movie_app_project/controller/search_controller.dart';
 import 'package:movie_app_project/entity/media/collection.dart';
@@ -62,6 +63,7 @@ Future<void> _initializeDependencies() async {
   Get.put(MediaSearchController());
   Get.put(DetailsController());
   Get.put(BrowseController());
+  Get.put(ImagesController());
 }
 
 class MovieApp extends StatelessWidget {
