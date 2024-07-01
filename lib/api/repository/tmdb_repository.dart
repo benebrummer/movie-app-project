@@ -1,4 +1,5 @@
 import 'package:movie_app_project/api/repository/repository.dart';
+import 'package:movie_app_project/entity/backdrop.dart';
 import 'package:movie_app_project/entity/media/series/series_details.dart';
 import 'package:movie_app_project/entity/media/series/tv_series.dart';
 import 'package:tmdb_api/tmdb_api.dart';
@@ -35,14 +36,12 @@ class MediaRepository extends TmdbRepository {
 
   @override
   Future<List<Movie>> getUpcomingMovies() async {
-    // TODO: dates in response?
     final Map response = await tmdbClient.v3.movies.getUpcoming();
     return _mapResultsToMovieList(response);
   }
 
   @override
   Future<List<Movie>> getNowPlayingMovies() async {
-    // TODO: dates in response?
     final Map response = await tmdbClient.v3.movies.getNowPlaying();
     return _mapResultsToMovieList(response);
   }
@@ -103,6 +102,24 @@ class MediaRepository extends TmdbRepository {
   Future<List<Review>> getSeriesReviews(final int seriesId) async {
     final Map response = await tmdbClient.v3.tv.getReviews(seriesId);
     return _mapResultsToReviewList(response);
+  }
+
+  @override
+  Future<List<Backdrop>> getMovieImages(int movieId) async {
+    final Map response = await tmdbClient.v3.movies
+        .getImages(movieId, includeImageLanguage: 'en,null');
+    return response['backdrops']
+        .map<Backdrop>((json) => Backdrop.fromJson(json))
+        .toList();
+  }
+
+  @override
+  Future<List<Backdrop>> getSeriesImages(int seriesId) async {
+    final Map response = await tmdbClient.v3.tv
+        .getImages(seriesId, includeImageLanguage: 'en,null');
+    return response['backdrops']
+        .map<Backdrop>((json) => Backdrop.fromJson(json))
+        .toList();
   }
 
   Future<List<Movie>> _mapResultsToMovieList(final Map response) async {

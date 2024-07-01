@@ -18,22 +18,45 @@ class DetailsController extends GetxController {
   int _currentSeriesId = 0;
 
   get isLoading => _isLoading.value;
-
   get isFavorite => _isFavorite.value;
-
   MovieDetails get currentMovieDetails => _currentMovieDetails;
-
   SeriesDetails get currentSeriesDetails => _currentSeriesDetails;
+
+  void setCurrentMovieDetails(final MovieDetails movieDetails) {
+    _currentMovieId = movieDetails.id;
+    _currentMovieDetails = movieDetails;
+    _isFavorite.value =
+        _favoritesRepository.getFavoriteMovie(movieDetails.id) != null
+            ? true
+            : false;
+  }
+
+  void setCurrentSeriesDetails(final SeriesDetails seriesDetails) {
+    _currentSeriesId = seriesDetails.id;
+    _currentSeriesDetails = seriesDetails;
+    _isFavorite.value =
+        _favoritesRepository.getFavoriteSeries(seriesDetails.id) != null
+            ? true
+            : false;
+  }
 
   void initMovieDetails(final int movieId) {
     _currentMovieId = movieId;
-    movieInFavorites();
+    if (_favoritesRepository.getFavoriteMovie(movieId) != null) {
+      _isFavorite.value = true;
+    } else {
+      _isFavorite.value = false;
+    }
     getMovieDetails();
   }
 
   void initSeriesDetails(final int seriesId) {
     _currentSeriesId = seriesId;
-    seriesInFavorites();
+    if (_favoritesRepository.getFavoriteSeries(seriesId) != null) {
+      _isFavorite.value = true;
+    } else {
+      _isFavorite.value = false;
+    }
     getSeriesDetails();
   }
 
@@ -63,33 +86,7 @@ class DetailsController extends GetxController {
     return _currentMovieDetails.productionCompanies.map((e) => e.name).toList();
   }
 
-  void addFavoriteMovie() async {
-    _favoritesRepository.addFavoriteMovie(_currentMovieDetails);
-    _isFavorite.value = true;
-  }
-
-  void removeFavoriteMovie() async {
-    _favoritesRepository.removeFavoriteMovie(_currentMovieId);
-    _isFavorite.value = false;
-  }
-
-  void movieInFavorites() {
-    final movie = _favoritesRepository.getFavoriteMovie(_currentMovieId);
-    _isFavorite.value = movie != null;
-  }
-
-  void addFavoriteSeries() async {
-    _favoritesRepository.addFavoriteSeries(_currentSeriesDetails);
-    _isFavorite.value = true;
-  }
-
-  void removeFavoriteSeries() async {
-    _favoritesRepository.removeFavoriteSeries(_currentSeriesId);
-    _isFavorite.value = false;
-  }
-
-  void seriesInFavorites() {
-    final series = _favoritesRepository.getFavoriteSeries(_currentSeriesId);
-    _isFavorite.value = series != null;
+  void toggleFavorite() {
+    _isFavorite.value = !_isFavorite.value;
   }
 }

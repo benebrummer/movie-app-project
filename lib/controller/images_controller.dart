@@ -1,0 +1,27 @@
+import 'package:get/get.dart';
+import 'package:movie_app_project/api/repository/tmdb_repository.dart';
+
+import '../entity/backdrop.dart';
+
+class ImagesController extends GetxController {
+  final MediaRepository _mediaRepository = Get.find();
+  late List<Backdrop> _movieImages = [];
+  late List<Backdrop> _seriesImages = [];
+  final _isLoading = false.obs;
+
+  get isLoading => _isLoading.value;
+  get movieImages => _movieImages;
+  get seriesImages => _seriesImages;
+
+  void getMovieImages(final int movieId) async {
+    _isLoading.value = true;
+    _movieImages = await _mediaRepository.getMovieImages(movieId);
+    _isLoading.value = false;
+  }
+
+  void getSeriesImages(final int seriesId) async {
+    _isLoading.value = true;
+    _seriesImages = await _mediaRepository.getSeriesImages(seriesId);
+    _isLoading.value = false;
+  }
+}

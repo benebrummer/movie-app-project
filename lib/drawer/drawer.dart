@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/pages/browse/browse_page.dart';
 import 'package:movie_app_project/pages/favorites/favorites_page.dart';
+
+import '../controller/browse_controller.dart';
 import '../controller/favorites_controller.dart';
 import '../pages/search/search_page.dart';
 
@@ -17,13 +19,27 @@ class MovieAppDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          const DrawerHeader(
-            child: Text(
-              'Movie App',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+          DrawerHeader(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Movie App',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                SvgPicture.asset(
+                  'assets/images/tmdb_short.svg',
+                  height: 40,
+                  colorFilter: const ColorFilter.mode(
+                    Color.fromRGBO(1, 180, 228, 1),
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ],
             ),
           ),
           ListTile(
@@ -36,7 +52,6 @@ class MovieAppDrawer extends StatelessWidget {
                   return SearchPage();
                 }),
               );
-              _browseController.browseMedia();
             },
           ),
           ListTile(
@@ -49,6 +64,8 @@ class MovieAppDrawer extends StatelessWidget {
                   return BrowsePage();
                 }),
               );
+              // TODO: moved browse page init data to the correct place
+              _browseController.browseMedia();
             },
           ),
           ListTile(
@@ -63,7 +80,7 @@ class MovieAppDrawer extends StatelessWidget {
                   },
                 ),
               );
-              _favoritesController.getFavoriteMovies();
+              _favoritesController.getFavorites();
             },
           ),
         ],

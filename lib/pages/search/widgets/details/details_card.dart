@@ -9,7 +9,6 @@ import '../../../../controller/details_controller.dart';
 class DetailsCard extends StatelessWidget {
   final String title;
 
-  // TODO: maybe remove SearchCategory and replace with MediaType
   final MediaType mediaType;
   final String overview;
   final Widget statsWidget;
@@ -71,29 +70,6 @@ class DetailsCard extends StatelessWidget {
                   itemCount: producerCompanies.length,
                   itemBuilder: (context, index) {
                     return Text(producerCompanies[index].name);
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              Obx(
-                () => GestureDetector(
-                  child: Icon(
-                    _detailsController.isFavorite
-                        ? Icons.favorite
-                        : Icons.favorite_border_outlined,
-                    color: Colors.red,
-                    size: 50,
-                  ),
-                  onTap: () {
-                    if (mediaType == MediaType.movie) {
-                      _detailsController.isFavorite
-                          ? _detailsController.removeFavoriteMovie()
-                          : _detailsController.addFavoriteMovie();
-                    } else if (mediaType == MediaType.tv) {
-                      _detailsController.isFavorite
-                          ? _detailsController.removeFavoriteSeries()
-                          : _detailsController.addFavoriteSeries();
-                    }
                   },
                 ),
               ),
