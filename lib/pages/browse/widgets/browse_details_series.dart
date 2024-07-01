@@ -34,7 +34,8 @@ class BrowseDetailsSeries extends StatelessWidget {
             floating: true,
             flexibleSpace: FlexibleSpaceBar(
               background: ClipRRect(
-                child: Image.network(
+                child: show.backdropPath.isEmpty ? const Icon(Icons.error_outline)
+                : Image.network(
                           filterQuality: FilterQuality.high,
                           fit: BoxFit.cover,
                           'https://image.tmdb.org/t/p/w500${show.backdropPath}'
@@ -46,7 +47,7 @@ class BrowseDetailsSeries extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(show.name, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w800),),
                   const SizedBox(height: 5, width: double.infinity,),

@@ -44,7 +44,8 @@ class TrendingSlider extends StatelessWidget {
                   child: SizedBox(
                     height: 300,
                     width: 200,
-                    child: Image.network(
+                    child: movie.posterPath.isEmpty ? const Icon(Icons.error_outline)
+                    : Image.network(
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.cover,
                       'https://image.tmdb.org/t/p/w500${movie.posterPath}'
@@ -63,7 +64,8 @@ class TrendingSlider extends StatelessWidget {
                   child: SizedBox(
                     height: 300,
                     width: 200,
-                    child: Image.network(
+                    child: tvSeries.posterPath.isEmpty ? const Icon(Icons.error_outline)
+                    : Image.network(
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.cover,
                       'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}'

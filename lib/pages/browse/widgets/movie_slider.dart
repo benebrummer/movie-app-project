@@ -39,7 +39,8 @@ class MovieSlider1 extends StatelessWidget {
                     child: SizedBox(
                       height: 200,
                       width: 200/(16/9),
-                      child: Image.network(
+                      child: movie.posterPath.isEmpty ? const Icon(Icons.error_outline)
+                      : Image.network(
                         filterQuality: FilterQuality.high,
                         fit: BoxFit.cover,
                         'https://image.tmdb.org/t/p/w500${movie.posterPath}'
@@ -61,7 +62,8 @@ class MovieSlider1 extends StatelessWidget {
                     child: SizedBox(
                       height: 200,
                       width: 200/(16/9),
-                      child: Image.network(
+                      child: tvSeries.posterPath.isEmpty ? const Icon(Icons.error_outline)
+                      : Image.network(
                         filterQuality: FilterQuality.high,
                         fit: BoxFit.cover,
                         'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}'
@@ -109,7 +111,8 @@ class MovieSlider2 extends StatelessWidget {
                     child: SizedBox(
                       height: 200,
                       width: 200/(16/9),
-                      child: Image.network(
+                      child: movie.posterPath.isEmpty ? const Icon(Icons.error_outline)
+                      : Image.network(
                         filterQuality: FilterQuality.high,
                         fit: BoxFit.cover,
                         'https://image.tmdb.org/t/p/w500${movie.posterPath}'
@@ -131,7 +134,8 @@ class MovieSlider2 extends StatelessWidget {
                     child: SizedBox(
                       height: 200,
                       width: 200/(16/9),
-                      child: Image.network(
+                      child: tvSeries.posterPath.isEmpty ? const Icon(Icons.error_outline)
+                      : Image.network(
                         filterQuality: FilterQuality.high,
                         fit: BoxFit.cover,
                         'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}'
@@ -179,7 +183,8 @@ class MovieSlider3 extends StatelessWidget {
                     child: SizedBox(
                       height: 200,
                       width: 200/(16/9),
-                      child: Image.network(
+                      child: movie.posterPath.isEmpty ? const Icon(Icons.error_outline)
+                      : Image.network(
                         filterQuality: FilterQuality.high,
                         fit: BoxFit.cover,
                         'https://image.tmdb.org/t/p/w500${movie.posterPath}'
@@ -201,7 +206,8 @@ class MovieSlider3 extends StatelessWidget {
                     child: SizedBox(
                       height: 200,
                       width: 200/(16/9),
-                      child: Image.network(
+                      child: tvSeries.posterPath.isEmpty ? const Icon(Icons.error_outline)
+                      : Image.network(
                         filterQuality: FilterQuality.high,
                         fit: BoxFit.cover,
                         'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}'

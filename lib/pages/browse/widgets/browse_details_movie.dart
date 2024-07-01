@@ -7,10 +7,11 @@ class BrowseDetailsMovie extends StatelessWidget {
   BrowseDetailsMovie({super.key, required this.movie});
 
   final Movie movie;
-  final DetailsController detailController = Get.find<DetailsController>();
+  final DetailsController _detailController = Get.find<DetailsController>();
 
   @override
   Widget build(BuildContext context) {
+    _detailController.initMovieDetails(movie.id);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -35,7 +36,8 @@ class BrowseDetailsMovie extends StatelessWidget {
             floating: true,
             flexibleSpace: FlexibleSpaceBar(
               background: ClipRRect(
-                child: Image.network(
+                child: movie.backdropPath.isEmpty ? const Icon(Icons.error_outline)
+                  : Image.network(
                           filterQuality: FilterQuality.high,
                           fit: BoxFit.cover,
                           'https://image.tmdb.org/t/p/w500${movie.backdropPath}'
@@ -63,15 +65,20 @@ class BrowseDetailsMovie extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Text('Release Date: '),
+                            const Icon(Icons.watch_later),
+                            Text('${_detailController.currentMovieDetails.runtime} min'),
+                          ]
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.calendar_month_outlined),
                             Text(movie.releaseDate),
                           ]
                         ),
                         Row(
                           children: [
-                            const Text('Rating: '),
                             const Icon(Icons.star, color: Colors.amber,),
-                            Text('${movie.voteAverage.toStringAsFixed(1)}/10'),
+                            Text('${movie.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentMovieDetails.voteCount})'),
                           ]
                         ),
                         Row(
@@ -83,6 +90,36 @@ class BrowseDetailsMovie extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 5,),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.amber)
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Produced by: ${_detailController.currentMovieDetails.productionCompanies.isEmpty ? '\n-' : ''}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          height: _detailController.currentMovieDetails.productionCompanies.length * 20,
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: _detailController.currentMovieDetails.productionCompanies.length,
+                            itemBuilder: (context, index) {
+                              return Text(_detailController.currentMovieDetails.productionCompanies[index].name);
+                            },
+                          ),
+                        ),
+                      ],
+                    )
+                  )
                 ],
               ),
             ),
