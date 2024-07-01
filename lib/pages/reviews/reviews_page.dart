@@ -12,7 +12,6 @@ class ReviewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: add paging but most of the time reviews are not that many
     return Scaffold(
       appBar: AppBar(
         title: Text('Reviews: $title'),
@@ -32,7 +31,7 @@ class ReviewsPage extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Colors.grey,
+                              color: Theme.of(context).colorScheme.primary,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(10),

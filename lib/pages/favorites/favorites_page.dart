@@ -4,6 +4,7 @@ import 'package:movie_app_project/controller/favorites_controller.dart';
 import 'package:movie_app_project/drawer/drawer.dart';
 import 'package:movie_app_project/pages/favorites/widgets/favorite_movie_grid.dart';
 import 'package:movie_app_project/pages/favorites/widgets/favorite_series_grid.dart';
+import 'package:movie_app_project/pages/widgets/appbar/app_bar.dart';
 
 class FavoritesPage extends StatelessWidget {
   FavoritesPage({super.key});
@@ -13,9 +14,7 @@ class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Favorites'),
-      ),
+      appBar: const TmdbAppBar(title: 'Favorites'),
       drawer: MovieAppDrawer(),
       body: Padding(
         padding: const EdgeInsets.only(top: 13.0),

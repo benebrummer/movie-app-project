@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import 'package:movie_app_project/api/repository/tmdb_repository.dart';
-
-import 'package:movie_app_project/entity/media/series/tv_series.dart';
 import 'package:movie_app_project/entity/media/movie/movie.dart';
+import 'package:movie_app_project/entity/media/series/tv_series.dart';
 
-class BrowseController extends GetxController{
+class BrowseController extends GetxController {
   final MediaRepository _mediaRepository = Get.find<MediaRepository>();
 
   static const List<(BrowseCategory, String)> _browseCategories =
@@ -50,7 +49,6 @@ class BrowseController extends GetxController{
   String get upcomingTitle => _upcomingTitle.value;
   String get nowPlayingTitle => _nowPlayingTitle.value;
 
-
   String get currentlySelected {
     final int index = _selectedCategories.indexOf(true);
     return _browseCategories[index].$2;
@@ -89,20 +87,21 @@ class BrowseController extends GetxController{
     isLoading = true;
     checkTitle();
     if (current == BrowseCategory.movies) {
-        _getAllMovies();
+      _getAllMovies();
     } else {
-        _getAllSeries();
+      _getAllSeries();
     }
+    isLoading = false;
   }
 
-  void checkTitle(){
+  void checkTitle() {
     final BrowseCategory current = _selectedCategory;
     if (current == BrowseCategory.movies) {
-        upcomingTitle = 'Upcoming';
-        nowPlayingTitle = 'Now Playing';
+      upcomingTitle = 'Upcoming';
+      nowPlayingTitle = 'Now Playing';
     } else {
-        upcomingTitle = 'Airing Soon';
-        nowPlayingTitle = 'Now on Air';
+      upcomingTitle = 'Airing Soon';
+      nowPlayingTitle = 'Now on Air';
     }
   }
 
@@ -122,7 +121,6 @@ class BrowseController extends GetxController{
     }
     resultCountPopular = movies.length;
     moviePopularResults = movies;
-    isLoading = false;
   }
 
   Future<void> _getTopRatedMovies() async {
@@ -132,7 +130,6 @@ class BrowseController extends GetxController{
     }
     resultCountTopRated = movies.length;
     movieTopRatedResults = movies;
-    isLoading = false;
   }
 
   Future<void> _getUpcomingMovies() async {
@@ -142,7 +139,6 @@ class BrowseController extends GetxController{
     }
     resultCountUpcoming = movies.length;
     movieUpcomingResults = movies;
-    isLoading = false;
   }
 
   Future<void> _getNowPlayingMovies() async {
@@ -152,7 +148,6 @@ class BrowseController extends GetxController{
     }
     resultCountNowPlaying = movies.length;
     movieNowPlayingResults = movies;
-    isLoading = false;
   }
 
   Future<void> _getPopularSeries() async {
@@ -162,9 +157,8 @@ class BrowseController extends GetxController{
     }
     resultCountPopular = series.length;
     seriesPopularResults = series;
-    isLoading = false;
   }
-  
+
   Future<void> _getTopRatedSeries() async {
     final series = await _mediaRepository.getTopRatedSeries();
     if (series.isEmpty) {
@@ -172,7 +166,6 @@ class BrowseController extends GetxController{
     }
     resultCountTopRated = series.length;
     seriesTopRatedResults = series;
-    isLoading = false;
   }
 
   Future<void> _getAiringTodaySeries() async {
@@ -182,7 +175,6 @@ class BrowseController extends GetxController{
     }
     resultCountUpcoming = series.length;
     seriesAiringTodayResults = series;
-    isLoading = false;
   }
 
   Future<void> _getOnTheAirSeries() async {
@@ -192,7 +184,6 @@ class BrowseController extends GetxController{
     }
     resultCountNowPlaying = series.length;
     seriesOnTheAirResults = series;
-    isLoading = false;
   }
 
   void _getAllMovies() {

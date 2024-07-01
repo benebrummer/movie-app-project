@@ -32,9 +32,15 @@ class ReviewListTile extends StatelessWidget {
                     review.author,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    'Rating: ${review.authorDetails.rating == null ? '-' : review.authorDetails.rating.toString()}',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber),
+                      const SizedBox(width: 5),
+                      Text(
+                        '${review.authorDetails.rating == null ? '-' : review.authorDetails.rating.toString()} / 10',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ],
               ),

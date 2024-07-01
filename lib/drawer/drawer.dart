@@ -23,20 +23,25 @@ class MovieAppDrawer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Movie App',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Spacer(),
-                SvgPicture.asset(
-                  'assets/images/tmdb_short.svg',
-                  height: 40,
-                  colorFilter: const ColorFilter.mode(
-                    Color.fromRGBO(1, 180, 228, 1),
-                    BlendMode.srcIn,
+                // Text(
+                //   'TMDB App',
+                //   style: TextStyle(
+                //     fontSize: 28,
+                //     fontWeight: FontWeight.bold,
+                //     color: Theme.of(context).colorScheme.onSurface,
+                //   ),
+                // ),
+                // const Spacer(),
+                Expanded(
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/images/tmdb_short.svg',
+                      height: 60,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.primary,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -64,7 +69,6 @@ class MovieAppDrawer extends StatelessWidget {
                   return BrowsePage();
                 }),
               );
-              // TODO: moved browse page init data to the correct place
               _browseController.browseMedia();
             },
           ),

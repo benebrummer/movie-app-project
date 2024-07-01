@@ -1,90 +1,194 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:movie_app_project/entity/media/series/tv_series.dart';
+import 'package:movie_app_project/pages/widgets/appbar/details/series_app_bar.dart';
+import 'package:movie_app_project/pages/widgets/reviews_button.dart';
+import 'package:tmdb_api/tmdb_api.dart';
+
+import '../../../controller/details_controller.dart';
+import '../../../controller/images_controller.dart';
 
 class BrowseDetailsSeries extends StatelessWidget {
-  const BrowseDetailsSeries({super.key, required this.show});
+  BrowseDetailsSeries({super.key, required this.show});
 
   final TvSeries show;
+  final DetailsController _detailController = Get.find<DetailsController>();
+  final ImagesController _imagesController = Get.find<ImagesController>();
 
   @override
   Widget build(BuildContext context) {
+    _imagesController.getSeriesImages(show.id);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar.medium(
-            leading: Container(
-              height: 70, 
-              width: 70, 
-              margin: const EdgeInsets.only(
-                top: 14,
-                left: 14,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(8)
-              ),
-              child: IconButton(
-                onPressed: Navigator.of(context).pop,
-                icon: const Icon(Icons.arrow_back_rounded, color: Colors.black,),
-              ),
-            ),
-            backgroundColor: Colors.grey[700],
-            expandedHeight: 350,
-            pinned: true,
-            floating: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: ClipRRect(
-                child: show.backdropPath.isEmpty ? const Icon(Icons.error_outline)
-                : Image.network(
-                          filterQuality: FilterQuality.high,
-                          fit: BoxFit.cover,
-                          'https://image.tmdb.org/t/p/w500${show.backdropPath}'
-                ),
-              ),
-            ),
-          ),
+          SeriesAppBar(series: show),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(show.name, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w800),),
-                  const SizedBox(height: 5, width: double.infinity,),
-                  const Text('Overview', style: TextStyle(decoration: TextDecoration.underline, fontSize: 30, fontWeight: FontWeight.w500),),
-                  Text(show.overview, style: const TextStyle(fontSize: 20,)),
-                  const SizedBox(height: 22, width: double.infinity,),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.amber)
+            child: Obx(
+              () => _detailController.isLoading
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              show.name,
+                              style: const TextStyle(
+                                fontSize: 40,
+                                fontWeight: FontWeight.w800,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                            width: double.infinity,
+                          ),
+                          Center(
+                            child: Text(
+                              _detailController.currentSeriesDetails.tagline,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                            width: double.infinity,
+                          ),
+                          show.overview.isEmpty
+                              ? const Text('No overview available')
+                              : Text(show.overview,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                  )),
+                          const SizedBox(
+                            height: 22,
+                            width: double.infinity,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              children: [
+                                Row(children: [
+                                  const Icon(Icons.calendar_today),
+                                  const SizedBox(width: 5),
+                                  Text(show.firstAirDate),
+                                ]),
+                                Row(children: [
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                      '${show.voteAverage.toStringAsFixed(1)}/10'),
+                                ]),
+                                Row(
+                                  children: [
+                                    const Text('Language: '),
+                                    Text(show.originalLanguage)
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Produced by',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Wrap(
+                                  direction: Axis.vertical,
+                                  children: _detailController
+                                      .currentSeriesDetails.productionCompanies
+                                      .map((company) => Text(company.name))
+                                      .toList(),
+                                ),
+                              ],
+                            ),
+                          ),
+                          _imagesController.isLoading
+                              ? const CircularProgressIndicator()
+                              : _imagesController.movieImages.isEmpty
+                                  ? const Text('No images found')
+                                  : CarouselSlider.builder(
+                                      options: CarouselOptions(
+                                        enableInfiniteScroll: false,
+                                        enlargeCenterPage: true,
+                                        viewportFraction: 0.6,
+                                        autoPlay: true,
+                                      ),
+                                      itemCount:
+                                          _imagesController.seriesImages.length,
+                                      itemBuilder: (BuildContext context,
+                                          int index, int realIndex) {
+                                        final image = _imagesController
+                                            .seriesImages[index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Dialog(
+                                                  insetPadding:
+                                                      const EdgeInsets.all(5),
+                                                  child: Image.network(
+                                                    'https://image.tmdb.org/t/p/w500${image.filePath}',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: Image.network(
+                                              'https://image.tmdb.org/t/p/w500${image.filePath}',
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                          ReviewsButton(
+                              mediaId: show.id,
+                              mediaType: MediaType.tv,
+                              title: show.name)
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Text('First Air Date: '),
-                            Text(show.firstAirDate),
-                          ]
-                        ),
-                        Row(
-                          children: [
-                            const Text('Rating: '),
-                            const Icon(Icons.star, color: Colors.amber,),
-                            Text('${show.voteAverage.toStringAsFixed(1)}/10'),
-                          ]
-                        ),
-                        Row(
-                          children: [
-                            const Text('Language: '),
-                            Text(show.originalLanguage)
-                          ]
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
         ],

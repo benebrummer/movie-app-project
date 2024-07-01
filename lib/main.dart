@@ -18,6 +18,7 @@ import 'package:movie_app_project/entity/media/series/season.dart';
 import 'package:movie_app_project/entity/media/series/series_details.dart';
 import 'package:movie_app_project/pages/search/search_page.dart';
 import 'package:movie_app_project/persistence/favorites_repository.dart';
+import 'package:movie_app_project/theme.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'api/repository/tmdb_repository.dart';
@@ -73,10 +74,7 @@ class MovieApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.darkTheme,
       home: SearchPage(),
     );
   }
