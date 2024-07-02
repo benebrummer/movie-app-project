@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/controller/favorites_controller.dart';
-import 'package:movie_app_project/pages/browse/widgets/browse_details_series.dart';
+import 'package:movie_app_project/pages/widgets/details/details_series.dart';
 
-import '../../../../controller/details_controller.dart';
-import '../../../../entity/media/series/tv_series.dart';
+import '../../../controller/details_controller.dart';
+import '../../../entity/media/series/tv_series.dart';
 
 class SeriesResultItem extends StatelessWidget {
   final TvSeries series;
@@ -26,7 +26,7 @@ class SeriesResultItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return BrowseDetailsSeries(show: series);
+              return SeriesDetailsPage(show: series);
             },
           ),
         );

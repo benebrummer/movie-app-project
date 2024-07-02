@@ -7,7 +7,7 @@ import 'package:movie_app_project/pages/favorites/widgets/title_text.dart';
 
 import '../../../controller/favorites_controller.dart';
 import '../../../entity/media/series/series_details.dart';
-import '../../browse/widgets/browse_details_series.dart';
+import '../../widgets/details/details_series.dart';
 
 class FavoriteSeriesGrid extends StatelessWidget {
   FavoriteSeriesGrid({super.key});
@@ -36,7 +36,7 @@ class FavoriteSeriesGrid extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return BrowseDetailsSeries(
+                    return SeriesDetailsPage(
                         show: _mapSeriesDetailsToSeries(series));
                   },
                 ),

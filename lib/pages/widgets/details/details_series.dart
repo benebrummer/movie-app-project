@@ -1,28 +1,29 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_app_project/controller/details_controller.dart';
-import 'package:movie_app_project/controller/images_controller.dart';
-import 'package:movie_app_project/entity/media/movie/movie.dart';
-import 'package:movie_app_project/pages/widgets/appbar/details/movie_app_bar.dart';
+import 'package:movie_app_project/entity/media/series/tv_series.dart';
+import 'package:movie_app_project/pages/widgets/appbar/details/series_app_bar.dart';
 import 'package:movie_app_project/pages/widgets/reviews_button.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-class BrowseDetailsMovie extends StatelessWidget {
-  BrowseDetailsMovie({super.key, required this.movie});
+import '../../../controller/details_controller.dart';
+import '../../../controller/images_controller.dart';
 
-  final Movie movie;
+class SeriesDetailsPage extends StatelessWidget {
+  SeriesDetailsPage({super.key, required this.show});
+
+  final TvSeries show;
   final DetailsController _detailController = Get.find<DetailsController>();
   final ImagesController _imagesController = Get.find<ImagesController>();
 
   @override
   Widget build(BuildContext context) {
-    _imagesController.getMovieImages(movie.id);
+    _imagesController.getSeriesImages(show.id);
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            MovieAppBar(movie: movie),
+            SeriesAppBar(series: show),
             SliverToBoxAdapter(
               child: Obx(
                 () => _detailController.isLoading
@@ -33,11 +34,11 @@ class BrowseDetailsMovie extends StatelessWidget {
                     : Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Center(
                               child: Text(
-                                movie.title,
+                                show.name,
                                 style: const TextStyle(
                                   fontSize: 40,
                                   fontWeight: FontWeight.w800,
@@ -51,7 +52,7 @@ class BrowseDetailsMovie extends StatelessWidget {
                             ),
                             Center(
                               child: Text(
-                                _detailController.currentMovieDetails.tagline,
+                                _detailController.currentSeriesDetails.tagline,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -63,9 +64,9 @@ class BrowseDetailsMovie extends StatelessWidget {
                               height: 20,
                               width: double.infinity,
                             ),
-                            movie.overview.isEmpty
+                            show.overview.isEmpty
                                 ? const Text('No overview available')
-                                : Text(movie.overview,
+                                : Text(show.overview,
                                     style: const TextStyle(
                                       fontSize: 20,
                                     )),
@@ -85,18 +86,11 @@ class BrowseDetailsMovie extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      const Icon(Icons.watch_later),
+                                      const Icon(Icons.calendar_today),
                                       const SizedBox(width: 5),
-                                      Text(
-                                          '${_detailController.currentMovieDetails.runtime} min'),
+                                      Text(show.firstAirDate),
                                     ],
                                   ),
-                                  const SizedBox(height: 5),
-                                  Row(children: [
-                                    const Icon(Icons.calendar_month_outlined),
-                                    const SizedBox(width: 5),
-                                    Text(movie.releaseDate),
-                                  ]),
                                   const SizedBox(height: 5),
                                   Row(
                                     children: [
@@ -106,16 +100,54 @@ class BrowseDetailsMovie extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                          '${movie.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentMovieDetails.voteCount})'),
+                                          '${show.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentSeriesDetails.voteCount})'),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Row(
+                                    children: [
+                                      const Text('Seasons:'),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                          '${_detailController.currentSeriesDetails.numberOfSeasons}'),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      const Text('Episodes:'),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                          '${_detailController.currentSeriesDetails.numberOfEpisodes}'),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      const Text('In production:'),
+                                      const SizedBox(width: 5),
+                                      _detailController
+                                              .currentSeriesDetails.inProduction
+                                          ? const Icon(Icons.check,
+                                              color: Colors.green)
+                                          : const Icon(Icons.close,
+                                              color: Colors.red),
                                     ],
                                   ),
                                   const SizedBox(height: 5),
                                   Row(
                                     children: [
                                       Text(
-                                          'Original Language: ${movie.originalLanguage}'),
+                                          'Original Language: ${show.originalLanguage}'),
                                     ],
-                                  )
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          'Created by: ${_detailController.currentSeriesDetails.createdBy.isEmpty ? '-' : _detailController.currentSeriesDetails.createdBy.map((e) => e.name).join(', ')}'),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
@@ -144,7 +176,8 @@ class BrowseDetailsMovie extends StatelessWidget {
                                   Wrap(
                                     direction: Axis.vertical,
                                     children: _detailController
-                                        .currentMovieDetails.productionCompanies
+                                        .currentSeriesDetails
+                                        .productionCompanies
                                         .map((company) => Text(company.name))
                                         .toList(),
                                   ),
@@ -158,7 +191,7 @@ class BrowseDetailsMovie extends StatelessWidget {
                                 child: _imagesController.isLoading
                                     ? const Center(
                                         child: CircularProgressIndicator())
-                                    : _imagesController.movieImages.isEmpty
+                                    : _imagesController.seriesImages.isEmpty
                                         ? const Text('No images found')
                                         : CarouselSlider.builder(
                                             options: CarouselOptions(
@@ -168,11 +201,11 @@ class BrowseDetailsMovie extends StatelessWidget {
                                               autoPlay: true,
                                             ),
                                             itemCount: _imagesController
-                                                .movieImages.length,
+                                                .seriesImages.length,
                                             itemBuilder: (BuildContext context,
                                                 int index, int realIndex) {
                                               final image = _imagesController
-                                                  .movieImages[index];
+                                                  .seriesImages[index];
                                               return GestureDetector(
                                                 onTap: () {
                                                   showDialog(
@@ -196,6 +229,7 @@ class BrowseDetailsMovie extends StatelessWidget {
                                                   child: Image.network(
                                                     'https://image.tmdb.org/t/p/w500${image.filePath}',
                                                     fit: BoxFit.contain,
+                                                    height: 200,
                                                   ),
                                                 ),
                                               );
@@ -207,10 +241,10 @@ class BrowseDetailsMovie extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 30.0),
                               child: ReviewsButton(
-                                  mediaId: movie.id,
-                                  mediaType: MediaType.movie,
-                                  title: movie.title),
-                            ),
+                                  mediaId: show.id,
+                                  mediaType: MediaType.tv,
+                                  title: show.name),
+                            )
                           ],
                         ),
                       ),

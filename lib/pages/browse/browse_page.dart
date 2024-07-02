@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/drawer/drawer.dart';
 import 'package:movie_app_project/pages/browse/widgets/category_selector.dart';
-import 'package:movie_app_project/pages/browse/widgets/movie_slider.dart';
+import 'package:movie_app_project/pages/browse/widgets/now_playing_slider.dart';
+import 'package:movie_app_project/pages/browse/widgets/top_rated_slider.dart';
 import 'package:movie_app_project/pages/browse/widgets/trending_slider.dart';
+import 'package:movie_app_project/pages/browse/widgets/upcoming_slider.dart';
 import 'package:movie_app_project/pages/widgets/appbar/app_bar.dart';
 
 class BrowsePage extends StatelessWidget {
@@ -64,7 +66,7 @@ class BrowsePage extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           ),
                         )
-                      : MovieSlider1(),
+                      : TopRatedSlider(),
                 ),
                 const SizedBox(height: 30),
                 const Divider(),
@@ -89,7 +91,7 @@ class BrowsePage extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           ),
                         )
-                      : MovieSlider2(),
+                      : UpcomingSlider(),
                 ),
                 const SizedBox(height: 30),
                 const Divider(),
@@ -114,7 +116,7 @@ class BrowsePage extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           ),
                         )
-                      : MovieSlider3(),
+                      : NowPlayingSlider(),
                 ),
                 const SizedBox(height: 30),
               ],

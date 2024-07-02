@@ -5,9 +5,10 @@ import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
 import 'package:movie_app_project/entity/media/movie/movie.dart';
 import 'package:movie_app_project/entity/media/series/tv_series.dart';
-import 'package:movie_app_project/pages/browse/widgets/browse_details_movie.dart';
-import 'package:movie_app_project/pages/browse/widgets/browse_details_series.dart';
 import 'package:movie_app_project/pages/favorites/widgets/poster_image.dart';
+
+import '../../widgets/details/details_movie.dart';
+import '../../widgets/details/details_series.dart';
 
 class TrendingSlider extends StatelessWidget {
   TrendingSlider({super.key});
@@ -43,7 +44,7 @@ class TrendingSlider extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BrowseDetailsMovie(movie: movie),
+                        builder: (context) => MovieDetailsPage(movie: movie),
                       ),
                     );
                   },
@@ -77,7 +78,7 @@ class TrendingSlider extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                BrowseDetailsSeries(show: tvSeries)));
+                                SeriesDetailsPage(show: tvSeries)));
                   },
                   child: Column(
                     children: [
