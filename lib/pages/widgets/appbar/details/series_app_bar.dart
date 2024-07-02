@@ -104,10 +104,12 @@ class SeriesAppBar extends StatelessWidget {
       expandedHeight: 180,
       collapsedHeight: 70,
       flexibleSpace: FlexibleSpaceBar(
-        background: Image.network(
-          'https://image.tmdb.org/t/p/w500${series.backdropPath}',
-          fit: BoxFit.cover,
-        ),
+        background: series.backdropPath.isEmpty
+            ? null
+            : Image.network(
+                'https://image.tmdb.org/t/p/w500${series.backdropPath}',
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }

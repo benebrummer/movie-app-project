@@ -104,10 +104,12 @@ class MovieAppBar extends StatelessWidget {
       expandedHeight: 180,
       collapsedHeight: 70,
       flexibleSpace: FlexibleSpaceBar(
-        background: Image.network(
-          'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
-          fit: BoxFit.cover,
-        ),
+        background: movie.backdropPath.isEmpty
+            ? null
+            : Image.network(
+                'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }
