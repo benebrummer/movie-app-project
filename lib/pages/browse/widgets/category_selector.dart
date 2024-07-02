@@ -23,7 +23,6 @@ class CategorySelector extends StatelessWidget {
                 ),
                 onPressed: (int index) {
                   controller.updateSelectedCategory(index);
-                  debugPrint(controller.selectedCategory.toString());
                 },
                 isSelected: controller.selectedCategories,
                 children: controller.browseCategories
