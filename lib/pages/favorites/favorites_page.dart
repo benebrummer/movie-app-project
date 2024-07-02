@@ -16,42 +16,44 @@ class FavoritesPage extends StatelessWidget {
     return Scaffold(
       appBar: const TmdbAppBar(title: 'Favorites'),
       drawer: MovieAppDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 13.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Obx(
-                () {
-                  return ToggleButtons(
-                    constraints: const BoxConstraints(
-                      minHeight: 50.0,
-                      minWidth: 100.0,
-                    ),
-                    textStyle: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                    onPressed: (int index) {
-                      _favoritesController.updateMediaType(index);
-                    },
-                    isSelected: _favoritesController.selectedMediaTypes,
-                    children: List.of(
-                        {const Text('Movies'), const Text('TV Shows')},
-                        growable: false),
-                  );
-                },
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 13.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Obx(
+                  () {
+                    return ToggleButtons(
+                      constraints: const BoxConstraints(
+                        minHeight: 50.0,
+                        minWidth: 100.0,
+                      ),
+                      textStyle: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                      onPressed: (int index) {
+                        _favoritesController.updateMediaType(index);
+                      },
+                      isSelected: _favoritesController.selectedMediaTypes,
+                      children: List.of(
+                          {const Text('Movies'), const Text('TV Shows')},
+                          growable: false),
+                    );
+                  },
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Obx(() => _favoritesController.selectedMediaTypes[0]
-                    ? FavoriteMovieGrid()
-                    : FavoriteSeriesGrid()),
+              const SizedBox(height: 20),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Obx(() => _favoritesController.selectedMediaTypes[0]
+                      ? FavoriteMovieGrid()
+                      : FavoriteSeriesGrid()),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
