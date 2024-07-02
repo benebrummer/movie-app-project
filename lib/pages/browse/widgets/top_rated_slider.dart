@@ -76,29 +76,26 @@ class TopRatedSlider extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: SizedBox(
-                      width: 150,
-                      child: Column(
-                        children: [
-                          PosterImage(posterPath: tvSeries.posterPath),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 5.0, left: 8.0, right: 8.0),
-                            child: Text(
-                              tvSeries.name,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
+                  child: SizedBox(
+                    width: 150,
+                    child: Column(
+                      children: [
+                        PosterImage(posterPath: tvSeries.posterPath),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 5.0, left: 8.0, right: 8.0),
+                          child: Text(
+                            tvSeries.name,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

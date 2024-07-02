@@ -8,8 +8,16 @@ class PosterImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: posterPath.isEmpty
-          ? const Icon(
-              Icons.movie,
+          ? Container(
+              width: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: const Icon(
+                Icons.movie,
+                size: 40,
+              ),
             )
           : ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
