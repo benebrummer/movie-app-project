@@ -103,6 +103,7 @@ class MovieAppBar extends StatelessWidget {
       floating: true,
       expandedHeight: 180,
       collapsedHeight: 70,
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       flexibleSpace: FlexibleSpaceBar(
         background: movie.backdropPath.isEmpty
             ? null

@@ -103,6 +103,7 @@ class SeriesAppBar extends StatelessWidget {
       floating: true,
       expandedHeight: 180,
       collapsedHeight: 70,
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       flexibleSpace: FlexibleSpaceBar(
         background: series.backdropPath.isEmpty
             ? null
