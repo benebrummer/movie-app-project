@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/pages/reviews/widgets/review_list_item.dart';
+import 'package:movie_app_project/pages/widgets/appbar/app_bar.dart';
 
 import '../../controller/review_controller.dart';
 
@@ -13,8 +14,8 @@ class ReviewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Reviews: $title'),
+      appBar: TmdbAppBar(
+        title: 'Reviews: $title',
       ),
       body: SafeArea(
         child: Obx(
