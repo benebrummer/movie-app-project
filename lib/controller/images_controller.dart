@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:movie_app_project/api/repository/tmdb_repository.dart';
+import 'package:tmdb_api/tmdb_api.dart';
 
 import '../entity/backdrop.dart';
 
@@ -23,5 +24,9 @@ class ImagesController extends GetxController {
     _isLoading.value = true;
     _seriesImages = await _mediaRepository.getSeriesImages(seriesId);
     _isLoading.value = false;
+  }
+
+  List<Backdrop> getImages(final MediaType mediaType) {
+    return mediaType == MediaType.movie ? _movieImages : _seriesImages;
   }
 }

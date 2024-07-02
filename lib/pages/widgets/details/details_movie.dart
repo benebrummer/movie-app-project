@@ -1,10 +1,12 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
 import 'package:movie_app_project/controller/images_controller.dart';
 import 'package:movie_app_project/entity/media/movie/movie.dart';
 import 'package:movie_app_project/pages/widgets/appbar/details/movie_app_bar.dart';
+import 'package:movie_app_project/pages/widgets/details/images_slider.dart';
+import 'package:movie_app_project/pages/widgets/details/movie_stats.dart';
+import 'package:movie_app_project/pages/widgets/details/producer_container.dart';
 import 'package:movie_app_project/pages/widgets/reviews_button.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
@@ -70,149 +72,21 @@ class MovieDetailsPage extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 20,
                                     )),
-                            const SizedBox(
-                              height: 22,
-                              width: double.infinity,
+                            const SizedBox(height: 22),
+                            MovieStatsContainer(
+                              movie: _detailController.currentMovieDetails,
                             ),
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.watch_later),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                          '${_detailController.currentMovieDetails.runtime} min'),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Row(children: [
-                                    const Icon(Icons.calendar_month_outlined),
-                                    const SizedBox(width: 5),
-                                    Text(movie.releaseDate),
-                                  ]),
-                                  const SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                          '${movie.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentMovieDetails.voteCount})'),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                          'Original Language: ${movie.originalLanguage}'),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
+                            const SizedBox(height: 5),
                             _detailController.currentMovieDetails
                                     .productionCompanies.isEmpty
                                 ? const SizedBox()
-                                : Container(
-                                    padding: const EdgeInsets.all(8),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          'Produced by',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Wrap(
-                                          direction: Axis.vertical,
-                                          children: _detailController
-                                              .currentMovieDetails
-                                              .productionCompanies
-                                              .map((company) =>
-                                                  Text(company.name))
-                                              .toList(),
-                                        ),
-                                      ],
-                                    ),
+                                : ProducerContainer(
+                                    productionCompanies: _detailController
+                                        .currentMovieDetails
+                                        .productionCompanies,
                                   ),
                             const SizedBox(height: 10),
-                            Obx(
-                              () => SizedBox(
-                                height: 200,
-                                child: _imagesController.isLoading
-                                    ? const Center(
-                                        child: CircularProgressIndicator())
-                                    : _imagesController.movieImages.isEmpty
-                                        ? const Center(
-                                            child: Text('No images found'))
-                                        : CarouselSlider.builder(
-                                            options: CarouselOptions(
-                                              enableInfiniteScroll: false,
-                                              enlargeCenterPage: true,
-                                              viewportFraction: 0.6,
-                                              autoPlay: true,
-                                            ),
-                                            itemCount: _imagesController
-                                                .movieImages.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index, int realIndex) {
-                                              final image = _imagesController
-                                                  .movieImages[index];
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Dialog(
-                                                        insetPadding:
-                                                            const EdgeInsets
-                                                                .all(5),
-                                                        child: Image.network(
-                                                          'https://image.tmdb.org/t/p/w500${image.filePath}',
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: Image.network(
-                                                    'https://image.tmdb.org/t/p/w500${image.filePath}',
-                                                    fit: BoxFit.contain,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                              ),
-                            ),
+                            ImagesSlider(mediaType: MediaType.movie),
                             const SizedBox(height: 10),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 30.0),
