@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:movie_app_project/controller/theme_controller.dart';
 import 'package:movie_app_project/pages/browse/browse_page.dart';
 import 'package:movie_app_project/pages/favorites/favorites_page.dart';
-
 import '../controller/browse_controller.dart';
 import '../controller/favorites_controller.dart';
 import '../pages/search/search_page.dart';
@@ -13,6 +13,7 @@ class MovieAppDrawer extends StatelessWidget {
 
   final FavoritesController _favoritesController = Get.find();
   final BrowseController _browseController = Get.find<BrowseController>();
+  final ThemeController _themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,18 @@ class MovieAppDrawer extends StatelessWidget {
                 _favoritesController.getFavorites();
               },
             ),
-          ],
+            ListTile(
+            title: Row(
+              children: [Text(_themeController.theme),
+                const Text(' Mode'),
+              ],
+            ),
+            leading: const Icon(Icons.sunny),
+            onTap: () {
+              _themeController.updateTheme();
+            },
+          )
+        ],
         ),
       ),
     );

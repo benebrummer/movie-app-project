@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:movie_app_project/controller/browse_controller.dart';
@@ -7,6 +8,7 @@ import 'package:movie_app_project/controller/favorites_controller.dart';
 import 'package:movie_app_project/controller/images_controller.dart';
 import 'package:movie_app_project/controller/review_controller.dart';
 import 'package:movie_app_project/controller/search_controller.dart';
+import 'package:movie_app_project/controller/theme_controller.dart';
 import 'package:movie_app_project/entity/media/collection.dart';
 import 'package:movie_app_project/entity/media/genre.dart';
 import 'package:movie_app_project/entity/media/language.dart';
@@ -29,7 +31,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initializeHive();
   await _initializeDependencies();
-  runApp(const MovieApp());
+  runApp(MovieApp());
 }
 
 Future<void> _initializeHive() async {
@@ -65,6 +67,7 @@ Future<void> _initializeDependencies() async {
   Get.put(DetailsController());
   Get.put(BrowseController());
   Get.put(ImagesController());
+  Get.put(ThemeController());
 }
 
 class MovieApp extends StatelessWidget {
@@ -72,9 +75,11 @@ class MovieApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
       home: SearchPage(),
     );
   }
