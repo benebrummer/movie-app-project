@@ -84,11 +84,14 @@ class BrowseDetailsSeries extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  Row(children: [
-                                    const Icon(Icons.calendar_today),
-                                    const SizedBox(width: 5),
-                                    Text(show.firstAirDate),
-                                  ]),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.calendar_today),
+                                      const SizedBox(width: 5),
+                                      Text(show.firstAirDate),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
                                   Row(children: [
                                     const Icon(
                                       Icons.star,
@@ -96,12 +99,13 @@ class BrowseDetailsSeries extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
-                                        '${show.voteAverage.toStringAsFixed(1)}/10'),
+                                        '${show.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentSeriesDetails.voteCount})'),
                                   ]),
+                                  const SizedBox(height: 5),
                                   Row(
                                     children: [
-                                      const Text('Language: '),
-                                      Text(show.originalLanguage)
+                                      Text(
+                                          'Original Language: ${show.originalLanguage}'),
                                     ],
                                   ),
                                 ],
@@ -140,54 +144,67 @@ class BrowseDetailsSeries extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            _imagesController.isLoading
-                                ? const CircularProgressIndicator()
-                                : _imagesController.movieImages.isEmpty
-                                    ? const Text('No images found')
-                                    : CarouselSlider.builder(
-                                        options: CarouselOptions(
-                                          enableInfiniteScroll: false,
-                                          enlargeCenterPage: true,
-                                          viewportFraction: 0.6,
-                                          autoPlay: true,
-                                        ),
-                                        itemCount: _imagesController
-                                            .seriesImages.length,
-                                        itemBuilder: (BuildContext context,
-                                            int index, int realIndex) {
-                                          final image = _imagesController
-                                              .seriesImages[index];
-                                          return GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return Dialog(
-                                                    insetPadding:
-                                                        const EdgeInsets.all(5),
-                                                    child: Image.network(
-                                                      'https://image.tmdb.org/t/p/w500${image.filePath}',
-                                                      fit: BoxFit.cover,
-                                                    ),
+                            const SizedBox(height: 10),
+                            Obx(
+                              () => SizedBox(
+                                height: 200,
+                                child: _imagesController.isLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
+                                    : _imagesController.seriesImages.isEmpty
+                                        ? const Text('No images found')
+                                        : CarouselSlider.builder(
+                                            options: CarouselOptions(
+                                              enableInfiniteScroll: false,
+                                              enlargeCenterPage: true,
+                                              viewportFraction: 0.6,
+                                              autoPlay: true,
+                                            ),
+                                            itemCount: _imagesController
+                                                .seriesImages.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index, int realIndex) {
+                                              final image = _imagesController
+                                                  .seriesImages[index];
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Dialog(
+                                                        insetPadding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        child: Image.network(
+                                                          'https://image.tmdb.org/t/p/w500${image.filePath}',
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      );
+                                                    },
                                                   );
                                                 },
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: Image.network(
+                                                    'https://image.tmdb.org/t/p/w500${image.filePath}',
+                                                    fit: BoxFit.contain,
+                                                    height: 200,
+                                                  ),
+                                                ),
                                               );
                                             },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.network(
-                                                'https://image.tmdb.org/t/p/w500${image.filePath}',
-                                                fit: BoxFit.contain,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                            ReviewsButton(
-                                mediaId: show.id,
-                                mediaType: MediaType.tv,
-                                title: show.name)
+                                          ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 30.0),
+                              child: ReviewsButton(
+                                  mediaId: show.id,
+                                  mediaType: MediaType.tv,
+                                  title: show.name),
+                            )
                           ],
                         ),
                       ),

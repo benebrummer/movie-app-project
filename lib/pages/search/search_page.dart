@@ -23,7 +23,10 @@ class SearchPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MediaSearchWidget(),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: MediaSearchWidget(),
+              ),
               const SizedBox(height: 20),
               Obx(() {
                 return controller.isSearching

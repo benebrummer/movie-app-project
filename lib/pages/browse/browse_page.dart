@@ -24,8 +24,9 @@ class BrowsePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const CategorySelector(),
+                const SizedBox(height: 20),
                 const Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.only(left: 15.0, bottom: 10.0),
                   child: Text(
                     'Popular',
                     style: TextStyle(
@@ -39,7 +40,7 @@ class BrowsePage extends StatelessWidget {
                     : TrendingSlider()),
                 const SizedBox(height: 30),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: EdgeInsets.only(left: 15.0),
                   child: Text(
                     'Top Rated',
                     style: TextStyle(
@@ -54,43 +55,42 @@ class BrowsePage extends StatelessWidget {
                       : MovieSlider1(),
                 ),
                 const SizedBox(height: 30),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: Obx(() {
-                    return Text(
+                Obx(() {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Text(
                       controller.upcomingTitle,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
-                    );
-                  }),
-                ),
+                    ),
+                  );
+                }),
                 Obx(
                   () => controller.isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : MovieSlider2(),
                 ),
                 const SizedBox(height: 30),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: Obx(() {
-                    return Text(
+                Obx(() {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Text(
                       controller.nowPlayingTitle,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
-                    );
-                  }),
-                ),
+                    ),
+                  );
+                }),
                 Obx(
                   () => controller.isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : MovieSlider3(),
                 ),
+                const SizedBox(height: 30),
               ],
             ),
           ),

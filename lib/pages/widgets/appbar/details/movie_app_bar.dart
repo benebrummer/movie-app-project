@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
 import 'package:movie_app_project/controller/favorites_controller.dart';
+import 'package:movie_app_project/controller/review_controller.dart';
+import 'package:movie_app_project/pages/reviews/reviews_page.dart';
+import 'package:tmdb_api/tmdb_api.dart';
 
 import '../../../../entity/media/movie/movie.dart';
 
@@ -11,13 +14,12 @@ class MovieAppBar extends StatelessWidget {
 
   final DetailsController _detailsController = Get.find();
   final FavoritesController _favoritesController = Get.find();
+  final ReviewController _reviewController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       leading: Container(
-        height: 70,
-        width: 70,
         margin: const EdgeInsets.only(
           top: 14,
           left: 14,
@@ -35,44 +37,65 @@ class MovieAppBar extends StatelessWidget {
         ),
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Obx(
-            () => Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: IconButton(
-                onPressed: () {
-                  String message = '';
-                  if (_detailsController.isFavorite) {
-                    _favoritesController.removeFavoriteMovie(movie.id);
-                    _detailsController.toggleFavorite();
-                    message = 'Removed from favorites';
-                  } else {
-                    _favoritesController.addFavoriteMovie(movie.id);
-                    _detailsController.toggleFavorite();
-                    message = 'Added to favorites';
-                  }
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(message),
-                      duration: const Duration(seconds: 1),
-                    ),
-                  );
-                },
-                icon: Icon(
-                  _detailsController.isFavorite
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: Colors.red,
-                  size: 35,
-                ),
+        Obx(
+          () => Container(
+            margin: const EdgeInsets.only(
+              top: 14,
+              right: 14,
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: IconButton(
+              onPressed: () {
+                String message = '';
+                if (_detailsController.isFavorite) {
+                  _favoritesController.removeFavoriteMovie(movie.id);
+                  _detailsController.toggleFavorite();
+                  message = 'Removed from favorites';
+                } else {
+                  _favoritesController.addFavoriteMovie(movie.id);
+                  _detailsController.toggleFavorite();
+                  message = 'Added to favorites';
+                }
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(message),
+                    duration: const Duration(seconds: 1),
+                  ),
+                );
+              },
+              icon: Icon(
+                _detailsController.isFavorite
+                    ? Icons.favorite
+                    : Icons.favorite_border,
+                color: Colors.red,
               ),
             ),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(
+            top: 14,
+            right: 14,
+          ),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: IconButton(
+            onPressed: () {
+              _reviewController.fetchReviews(movie.id, MediaType.movie);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReviewsPage(title: movie.title),
+                ),
+              );
+            },
+            icon: Icon(Icons.comment,
+                color: Theme.of(context).colorScheme.onPrimary),
           ),
         ),
       ],

@@ -83,31 +83,39 @@ class BrowseDetailsMovie extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  Row(children: [
-                                    const Icon(Icons.watch_later),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                        '${_detailController.currentMovieDetails.runtime} min'),
-                                  ]),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.watch_later),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                          '${_detailController.currentMovieDetails.runtime} min'),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
                                   Row(children: [
                                     const Icon(Icons.calendar_month_outlined),
                                     const SizedBox(width: 5),
                                     Text(movie.releaseDate),
                                   ]),
-                                  Row(children: [
-                                    const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                        '${movie.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentMovieDetails.voteCount})'),
-                                  ]),
-                                  Row(children: [
-                                    const Text('Language: '),
-                                    const SizedBox(width: 5),
-                                    Text(movie.originalLanguage)
-                                  ])
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                          '${movie.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentMovieDetails.voteCount})'),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          'Original Language: ${movie.originalLanguage}'),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -143,55 +151,66 @@ class BrowseDetailsMovie extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 20),
-                            _imagesController.isLoading
-                                ? const CircularProgressIndicator()
-                                : _imagesController.movieImages.isEmpty
-                                    ? const Text('No images found')
-                                    : CarouselSlider.builder(
-                                        options: CarouselOptions(
-                                          enableInfiniteScroll: false,
-                                          enlargeCenterPage: true,
-                                          viewportFraction: 0.6,
-                                          autoPlay: true,
-                                        ),
-                                        itemCount: _imagesController
-                                            .movieImages.length,
-                                        itemBuilder: (BuildContext context,
-                                            int index, int realIndex) {
-                                          final image = _imagesController
-                                              .movieImages[index];
-                                          return GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return Dialog(
-                                                    insetPadding:
-                                                        const EdgeInsets.all(5),
-                                                    child: Image.network(
-                                                      'https://image.tmdb.org/t/p/w500${image.filePath}',
-                                                      fit: BoxFit.cover,
-                                                    ),
+                            const SizedBox(height: 10),
+                            Obx(
+                              () => SizedBox(
+                                height: 200,
+                                child: _imagesController.isLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
+                                    : _imagesController.movieImages.isEmpty
+                                        ? const Text('No images found')
+                                        : CarouselSlider.builder(
+                                            options: CarouselOptions(
+                                              enableInfiniteScroll: false,
+                                              enlargeCenterPage: true,
+                                              viewportFraction: 0.6,
+                                              autoPlay: true,
+                                            ),
+                                            itemCount: _imagesController
+                                                .movieImages.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index, int realIndex) {
+                                              final image = _imagesController
+                                                  .movieImages[index];
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Dialog(
+                                                        insetPadding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        child: Image.network(
+                                                          'https://image.tmdb.org/t/p/w500${image.filePath}',
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      );
+                                                    },
                                                   );
                                                 },
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: Image.network(
+                                                    'https://image.tmdb.org/t/p/w500${image.filePath}',
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                ),
                                               );
                                             },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.network(
-                                                'https://image.tmdb.org/t/p/w500${image.filePath}',
-                                                fit: BoxFit.contain,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                            ReviewsButton(
-                                mediaId: movie.id,
-                                mediaType: MediaType.movie,
-                                title: movie.title),
+                                          ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 30.0),
+                              child: ReviewsButton(
+                                  mediaId: movie.id,
+                                  mediaType: MediaType.movie,
+                                  title: movie.title),
+                            ),
                           ],
                         ),
                       ),

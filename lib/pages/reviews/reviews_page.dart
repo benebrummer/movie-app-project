@@ -18,31 +18,34 @@ class ReviewsPage extends StatelessWidget {
         title: 'Reviews: $title',
       ),
       body: SafeArea(
-        child: Obx(
-          () => _reviewController.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : _reviewController.reviews.isEmpty
-                  ? const Center(child: Text('No reviews found'))
-                  : ListView.builder(
-                      itemCount: _reviewController.reviews.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final review = _reviewController.reviews[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(context).colorScheme.primary,
-                                width: 1,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Obx(
+            () => _reviewController.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _reviewController.reviews.isEmpty
+                    ? const Center(child: Text('No reviews found'))
+                    : ListView.builder(
+                        itemCount: _reviewController.reviews.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final review = _reviewController.reviews[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              borderRadius: BorderRadius.circular(10),
+                              child: ReviewListTile(review: review),
                             ),
-                            child: ReviewListTile(review: review),
-                          ),
-                        );
-                      },
-                    ),
+                          );
+                        },
+                      ),
+          ),
         ),
       ),
     );
