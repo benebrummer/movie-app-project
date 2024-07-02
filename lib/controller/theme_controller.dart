@@ -4,7 +4,7 @@ import 'package:movie_app_project/theme.dart';
 
 class ThemeController extends GetxController{
 
-  late String _theme = '';
+  late String _theme = 'Light';
   ThemeData _currentTheme = AppTheme.lightTheme;
 
   String get theme => _theme;
