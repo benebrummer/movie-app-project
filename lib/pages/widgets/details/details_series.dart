@@ -65,7 +65,8 @@ class SeriesDetailsPage extends StatelessWidget {
                               width: double.infinity,
                             ),
                             show.overview.isEmpty
-                                ? const Text('No overview available')
+                                ? const Center(
+                                    child: Text('No overview available'))
                                 : Text(show.overview,
                                     style: const TextStyle(
                                       fontSize: 20,
@@ -154,36 +155,43 @@ class SeriesDetailsPage extends StatelessWidget {
                             const SizedBox(
                               height: 5,
                             ),
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Produced by',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                            _detailController.currentSeriesDetails
+                                    .productionCompanies.isEmpty
+                                ? const SizedBox()
+                                : Container(
+                                    padding: const EdgeInsets.all(8),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Produced by',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Wrap(
+                                          direction: Axis.vertical,
+                                          children: _detailController
+                                              .currentSeriesDetails
+                                              .productionCompanies
+                                              .map((company) =>
+                                                  Text(company.name))
+                                              .toList(),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Wrap(
-                                    direction: Axis.vertical,
-                                    children: _detailController
-                                        .currentSeriesDetails
-                                        .productionCompanies
-                                        .map((company) => Text(company.name))
-                                        .toList(),
-                                  ),
-                                ],
-                              ),
-                            ),
                             const SizedBox(height: 10),
                             Obx(
                               () => SizedBox(
@@ -192,7 +200,8 @@ class SeriesDetailsPage extends StatelessWidget {
                                     ? const Center(
                                         child: CircularProgressIndicator())
                                     : _imagesController.seriesImages.isEmpty
-                                        ? const Text('No images found')
+                                        ? const Center(
+                                            child: Text('No images found'))
                                         : CarouselSlider.builder(
                                             options: CarouselOptions(
                                               enableInfiniteScroll: false,
