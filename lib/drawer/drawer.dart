@@ -24,15 +24,6 @@ class MovieAppDrawer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(
-                  //   'TMDB App',
-                  //   style: TextStyle(
-                  //     fontSize: 28,
-                  //     fontWeight: FontWeight.bold,
-                  //     color: Theme.of(context).colorScheme.onSurface,
-                  //   ),
-                  // ),
-                  // const Spacer(),
                   Expanded(
                     child: Center(
                       child: SvgPicture.asset(
