@@ -112,15 +112,23 @@ class MovieResultItem extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        _favoritesController.isMovieFavorite(movie.id)
-                            ? const Center(
-                                child: Icon(
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                  size: 15,
-                                ),
-                              )
-                            : const SizedBox(),
+                        SizedBox(
+                          width: 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              _favoritesController.isMovieFavorite(movie.id)
+                                  ? const Center(
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                        size: 15,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ],
