@@ -92,15 +92,48 @@ class BrowseDetailsSeries extends StatelessWidget {
                                     ],
                                   ),
                                   const SizedBox(height: 5),
-                                  Row(children: [
-                                    const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                        '${show.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentSeriesDetails.voteCount})'),
-                                  ]),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                          '${show.voteAverage.toStringAsFixed(1)}/10 (${_detailController.currentSeriesDetails.voteCount})'),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Row(
+                                    children: [
+                                      const Text('Seasons:'),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                          '${_detailController.currentSeriesDetails.numberOfSeasons}'),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      const Text('Episodes:'),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                          '${_detailController.currentSeriesDetails.numberOfEpisodes}'),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      const Text('In production:'),
+                                      const SizedBox(width: 5),
+                                      _detailController
+                                              .currentSeriesDetails.inProduction
+                                          ? const Icon(Icons.check,
+                                              color: Colors.green)
+                                          : const Icon(Icons.close,
+                                              color: Colors.red),
+                                    ],
+                                  ),
                                   const SizedBox(height: 5),
                                   Row(
                                     children: [
