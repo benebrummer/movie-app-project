@@ -36,8 +36,15 @@ class BrowsePage extends StatelessWidget {
                   ),
                 ),
                 Obx(() => controller.isLoading
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const SizedBox(
+                        height: 400,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
                     : TrendingSlider()),
+                const SizedBox(height: 30),
+                const Divider(),
                 const SizedBox(height: 30),
                 const Padding(
                   padding: EdgeInsets.only(left: 15.0),
@@ -51,9 +58,16 @@ class BrowsePage extends StatelessWidget {
                 ),
                 Obx(
                   () => controller.isLoading
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const SizedBox(
+                          height: 250,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
                       : MovieSlider1(),
                 ),
+                const SizedBox(height: 30),
+                const Divider(),
                 const SizedBox(height: 30),
                 Obx(() {
                   return Padding(
@@ -69,9 +83,16 @@ class BrowsePage extends StatelessWidget {
                 }),
                 Obx(
                   () => controller.isLoading
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const SizedBox(
+                          height: 250,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
                       : MovieSlider2(),
                 ),
+                const SizedBox(height: 30),
+                const Divider(),
                 const SizedBox(height: 30),
                 Obx(() {
                   return Padding(
@@ -87,7 +108,12 @@ class BrowsePage extends StatelessWidget {
                 }),
                 Obx(
                   () => controller.isLoading
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const SizedBox(
+                          height: 250,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
                       : MovieSlider3(),
                 ),
                 const SizedBox(height: 30),

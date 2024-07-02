@@ -78,7 +78,7 @@ class BrowseController extends GetxController {
   set resultCountUpcoming(int value) => _resultCountUpcoming.value = value;
   set resultCountNowPlaying(int value) => _resultCountNowPlaying.value = value;
 
-  void browseMedia() {
+  void browseMedia() async {
     resultCountPopular = 0;
     resultCountTopRated = 0;
     resultCountUpcoming = 0;
@@ -91,7 +91,6 @@ class BrowseController extends GetxController {
     } else {
       _getAllSeries();
     }
-    isLoading = false;
   }
 
   void checkTitle() {
@@ -186,18 +185,24 @@ class BrowseController extends GetxController {
     seriesOnTheAirResults = series;
   }
 
-  void _getAllMovies() {
-    _getPopularMovies();
-    _getTopRatedMovies();
-    _getUpcomingMovies();
-    _getNowPlayingMovies();
+  void _getAllMovies() async {
+    await Future.wait([
+      _getPopularMovies(),
+      _getTopRatedMovies(),
+      _getUpcomingMovies(),
+      _getNowPlayingMovies(),
+    ]);
+    isLoading = false;
   }
 
-  void _getAllSeries() {
-    _getPopularSeries();
-    _getTopRatedSeries();
-    _getAiringTodaySeries();
-    _getOnTheAirSeries();
+  void _getAllSeries() async {
+    await Future.wait([
+      _getPopularSeries(),
+      _getTopRatedSeries(),
+      _getAiringTodaySeries(),
+      _getOnTheAirSeries(),
+    ]);
+    isLoading = false;
   }
 }
 
