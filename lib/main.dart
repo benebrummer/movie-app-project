@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
@@ -31,7 +30,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initializeHive();
   await _initializeDependencies();
-  runApp(MovieApp());
+  runApp(const MovieApp());
 }
 
 Future<void> _initializeHive() async {
@@ -60,8 +59,8 @@ Future<void> _initializeDependencies() async {
     favoriteMoviesBox: movieBox,
     favoriteSeriesBox: seriesBox,
   ));
-  Get.put(MediaRepository());
-  Get.put(ReviewController());
+  final MediaRepository mediaRepo = Get.put(MediaRepository());
+  Get.put(ReviewController(mediaRepository: mediaRepo));
   Get.put(FavoritesController());
   Get.put(MediaSearchController());
   Get.put(DetailsController());
