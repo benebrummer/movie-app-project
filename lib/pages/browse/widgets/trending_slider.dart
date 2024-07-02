@@ -5,9 +5,10 @@ import 'package:movie_app_project/controller/browse_controller.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
 import 'package:movie_app_project/entity/media/movie/movie.dart';
 import 'package:movie_app_project/entity/media/series/tv_series.dart';
-import 'package:movie_app_project/pages/browse/widgets/browse_details_movie.dart';
-import 'package:movie_app_project/pages/browse/widgets/browse_details_series.dart';
 import 'package:movie_app_project/pages/favorites/widgets/poster_image.dart';
+
+import '../../widgets/details/details_movie.dart';
+import '../../widgets/details/details_series.dart';
 
 class TrendingSlider extends StatelessWidget {
   TrendingSlider({super.key});
@@ -18,9 +19,9 @@ class TrendingSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: double.infinity,
-        child: Obx(() {
-          //debugPrint(controller.resultCountPopular.toString());
+      width: double.infinity,
+      child: Obx(
+        () {
           if (controller.resultCountPopular == 0) {
             return const SizedBox();
           }
@@ -43,7 +44,7 @@ class TrendingSlider extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BrowseDetailsMovie(movie: movie),
+                        builder: (context) => MovieDetailsPage(movie: movie),
                       ),
                     );
                   },
@@ -77,38 +78,33 @@ class TrendingSlider extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                BrowseDetailsSeries(show: tvSeries)));
+                                SeriesDetailsPage(show: tvSeries)));
                   },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: SizedBox(
-                      height: 300,
-                      width: 200,
-                      child: Column(
-                        children: [
-                          PosterImage(posterPath: tvSeries.posterPath),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 5.0, left: 8.0, right: 8.0),
-                            child: Text(
-                              tvSeries.name,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
-                            ),
+                  child: Column(
+                    children: [
+                      PosterImage(posterPath: tvSeries.posterPath),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 5.0, left: 8.0, right: 8.0),
+                        child: Text(
+                          tvSeries.name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 );
               }
             },
           );
-        }));
+        },
+      ),
+    );
   }
 }

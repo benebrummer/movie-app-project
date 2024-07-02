@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
-import 'package:movie_app_project/pages/browse/widgets/browse_details_movie.dart';
+import 'package:movie_app_project/pages/widgets/details/details_movie.dart';
 
-import '../../../../controller/favorites_controller.dart';
-import '../../../../entity/media/movie/movie.dart';
+import '../../../controller/favorites_controller.dart';
+import '../../../entity/media/movie/movie.dart';
 
 class MovieResultItem extends StatelessWidget {
   final Movie movie;
@@ -28,7 +28,7 @@ class MovieResultItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return BrowseDetailsMovie(movie: movie);
+              return MovieDetailsPage(movie: movie);
             },
           ),
         );
@@ -112,15 +112,23 @@ class MovieResultItem extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        _favoritesController.isMovieFavorite(movie.id)
-                            ? const Center(
-                                child: Icon(
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                  size: 15,
-                                ),
-                              )
-                            : const SizedBox(),
+                        SizedBox(
+                          width: 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              _favoritesController.isMovieFavorite(movie.id)
+                                  ? const Center(
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                        size: 15,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ],

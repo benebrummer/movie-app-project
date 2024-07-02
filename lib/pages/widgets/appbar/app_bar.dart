@@ -15,7 +15,7 @@ class TmdbAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 30,
+          fontSize: 28,
           color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),

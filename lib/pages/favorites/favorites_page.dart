@@ -16,11 +16,11 @@ class FavoritesPage extends StatelessWidget {
     return Scaffold(
       appBar: const TmdbAppBar(title: 'Favorites'),
       drawer: MovieAppDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 13.0),
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20),
             Center(
               child: Obx(
                 () {
@@ -51,6 +51,7 @@ class FavoritesPage extends StatelessWidget {
                     : FavoriteSeriesGrid()),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

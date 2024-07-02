@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/controller/search_controller.dart';
-import 'package:movie_app_project/pages/search/widgets/search/search_result_movie.dart';
-import 'package:movie_app_project/pages/search/widgets/search/search_result_series.dart';
+import 'package:movie_app_project/pages/search/widgets/search_result_movie.dart';
+import 'package:movie_app_project/pages/search/widgets/search_result_series.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 import '../../../../entity/media/movie/movie.dart';

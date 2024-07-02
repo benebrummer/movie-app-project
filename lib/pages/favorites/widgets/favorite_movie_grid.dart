@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:movie_app_project/controller/details_controller.dart';
 import 'package:movie_app_project/controller/favorites_controller.dart';
 import 'package:movie_app_project/entity/media/movie/movie.dart';
-import 'package:movie_app_project/pages/browse/widgets/browse_details_movie.dart';
 import 'package:movie_app_project/pages/favorites/widgets/poster_image.dart';
 import 'package:movie_app_project/pages/favorites/widgets/title_text.dart';
+import 'package:movie_app_project/pages/widgets/details/details_movie.dart';
 
 import '../../../entity/media/movie/movie_details.dart';
 
@@ -35,7 +35,7 @@ class FavoriteMovieGrid extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return BrowseDetailsMovie(
+                    return MovieDetailsPage(
                         movie: _mapMovieDetailsToMovie(movie));
                   },
                 ),

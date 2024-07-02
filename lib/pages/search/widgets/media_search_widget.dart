@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-import '../../../../controller/search_controller.dart';
+import '../../../controller/search_controller.dart';
 
 class MediaSearchWidget extends StatelessWidget {
   MediaSearchWidget({super.key});
