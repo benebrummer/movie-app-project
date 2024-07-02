@@ -141,6 +141,13 @@ class BrowseDetailsSeries extends StatelessWidget {
                                           'Original Language: ${show.originalLanguage}'),
                                     ],
                                   ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          'Created by: ${_detailController.currentSeriesDetails.createdBy.isEmpty ? '-' : _detailController.currentSeriesDetails.createdBy.map((e) => e.name).join(', ')}'),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
