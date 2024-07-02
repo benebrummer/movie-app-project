@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:movie_app_project/controller/theme_controller.dart';
 import 'package:movie_app_project/pages/browse/browse_page.dart';
 import 'package:movie_app_project/pages/favorites/favorites_page.dart';
+
 import '../controller/browse_controller.dart';
 import '../controller/favorites_controller.dart';
 import '../pages/search/search_page.dart';
@@ -80,18 +81,20 @@ class MovieAppDrawer extends StatelessWidget {
                 _favoritesController.getFavorites();
               },
             ),
+            const Divider(),
             ListTile(
-            title: Row(
-              children: [Text(_themeController.theme),
-                const Text(' Mode'),
-              ],
+              title: Row(
+                children: [
+                  Text(_themeController.theme),
+                  const Text(' Mode'),
+                ],
+              ),
+              leading: const Icon(Icons.sunny),
+              onTap: () {
+                _themeController.updateTheme();
+              },
             ),
-            leading: const Icon(Icons.sunny),
-            onTap: () {
-              _themeController.updateTheme();
-            },
-          )
-        ],
+          ],
         ),
       ),
     );
