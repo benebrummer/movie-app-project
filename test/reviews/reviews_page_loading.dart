@@ -6,7 +6,7 @@ import 'package:movie_app_project/api/repository/tmdb_repository.dart';
 import 'package:movie_app_project/controller/review_controller.dart';
 import 'package:movie_app_project/pages/reviews/reviews_page.dart';
 
-import 'movie_details_page_test.mocks.dart';
+import 'reviews_page_test.mocks.dart';
 
 @GenerateMocks([MediaRepository])
 void main() {

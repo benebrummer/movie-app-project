@@ -11,7 +11,7 @@ import 'package:movie_app_project/pages/reviews/reviews_page.dart';
 import 'package:movie_app_project/pages/reviews/widgets/review_list_item.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-import 'movie_details_page_test.mocks.dart';
+import 'reviews_page_test.mocks.dart';
 
 @GenerateMocks([MediaRepository])
 void main() {
