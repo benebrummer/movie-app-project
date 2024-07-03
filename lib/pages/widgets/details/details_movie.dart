@@ -70,7 +70,7 @@ class MovieDetailsPage extends StatelessWidget {
                                     child: Text('No overview available'))
                                 : Text(movie.overview,
                                     style: const TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                     )),
                             const SizedBox(height: 22),
                             MovieStatsContainer(

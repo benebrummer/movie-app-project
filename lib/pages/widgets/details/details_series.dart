@@ -68,7 +68,7 @@ class SeriesDetailsPage extends StatelessWidget {
                                     child: Text('No overview available'))
                                 : Text(show.overview,
                                     style: const TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                     )),
                             const SizedBox(height: 22),
                             SeriesStatsContainer(
