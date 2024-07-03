@@ -43,7 +43,14 @@ class FavoriteMovieGrid extends StatelessWidget {
             },
             child: Column(
               children: [
-                PosterImage(posterPath: movie.posterPath),
+                Obx(
+                  () {
+                    if (_favoritesController.offline.value) {
+                      return const PosterImage(posterPath: '');
+                    }
+                    return PosterImage(posterPath: movie.posterPath);
+                  },
+                ),
                 TitleText(title: movie.title),
               ],
             ),

@@ -59,12 +59,9 @@ class MovieAppBar extends StatelessWidget {
                   _detailsController.toggleFavorite();
                   message = 'Added to favorites';
                 }
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(message),
-                    duration: const Duration(seconds: 1),
-                  ),
-                );
+                Get.snackbar(movie.title, message,
+                    snackPosition: SnackPosition.BOTTOM,
+                    duration: const Duration(seconds: 3));
               },
               icon: Icon(
                 _detailsController.isFavorite
@@ -105,12 +102,23 @@ class MovieAppBar extends StatelessWidget {
       collapsedHeight: 70,
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       flexibleSpace: FlexibleSpaceBar(
-        background: movie.backdropPath.isEmpty
-            ? null
-            : Image.network(
+        background: Obx(
+          () {
+            _favoritesController.checkConnection();
+            if (movie.backdropPath.isEmpty ||
+                _favoritesController.offline.value) {
+              return const Icon(
+                Icons.image,
+                size: 30,
+              );
+            } else {
+              return Image.network(
                 'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
                 fit: BoxFit.cover,
-              ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

@@ -17,7 +17,8 @@ class ImagesSlider extends StatelessWidget {
         height: 200,
         child: _imagesController.isLoading
             ? const Center(child: CircularProgressIndicator())
-            : _imagesController.getImages(mediaType).isEmpty
+            : _imagesController.getImages(mediaType).isEmpty ||
+                    _imagesController.offline
                 ? const Center(child: Text('No images found'))
                 : CarouselSlider.builder(
                     options: CarouselOptions(

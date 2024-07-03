@@ -44,7 +44,14 @@ class FavoriteSeriesGrid extends StatelessWidget {
             },
             child: Column(
               children: [
-                PosterImage(posterPath: series.posterPath),
+                Obx(
+                  () {
+                    if (_favoritesController.offline.value) {
+                      return const PosterImage(posterPath: '');
+                    }
+                    return PosterImage(posterPath: series.posterPath);
+                  },
+                ),
                 TitleText(title: series.name),
               ],
             ),

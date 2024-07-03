@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_project/api/repository/tmdb_repository.dart';
 
@@ -8,6 +9,7 @@ import '../persistence/favorites_repository.dart';
 class FavoritesController extends GetxController {
   final FavoritesRepository _favoritesRepository = Get.find();
   final MediaRepository _mediaRepository = Get.find();
+  final Connectivity _connectivity = Connectivity();
 
   final List<MovieDetails> _favoriteMovies = <MovieDetails>[];
   final List<SeriesDetails> _favoriteSeries = <SeriesDetails>[];
@@ -15,12 +17,14 @@ class FavoritesController extends GetxController {
       List.of([true, false], growable: false).obs;
   final _movieCount = 0.obs;
   final _seriesCount = 0.obs;
+  final _offline = false.obs;
 
   get favoriteMovies => _favoriteMovies;
   get favoriteSeries => _favoriteSeries;
   get movieCount => _movieCount;
   get seriesCount => _seriesCount;
   get selectedMediaTypes => _selectedMediaTypes;
+  get offline => _offline;
 
   void updateMediaType(final int index) {
     _selectedMediaTypes.fillRange(0, _selectedMediaTypes.length, false);
@@ -28,8 +32,24 @@ class FavoritesController extends GetxController {
   }
 
   void getFavorites() {
+    checkConnection();
     getFavoriteMovies();
     getFavoriteSeries();
+  }
+
+  void checkConnection() async {
+    final connectivityResult = await _connectivity.checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.none)) {
+      Get.snackbar(
+        'No internet connection',
+        'Images are not available offline',
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 5),
+      );
+      _offline.value = true;
+      return;
+    }
+    _offline.value = false;
   }
 
   void getFavoriteMovies() {

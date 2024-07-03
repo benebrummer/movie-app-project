@@ -70,6 +70,7 @@ class MovieAppDrawer extends StatelessWidget {
               title: const Text('Favorites'),
               leading: const Icon(Icons.favorite),
               onTap: () {
+                _favoritesController.getFavorites();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -78,7 +79,6 @@ class MovieAppDrawer extends StatelessWidget {
                     },
                   ),
                 );
-                _favoritesController.getFavorites();
               },
             ),
             const Divider(),
