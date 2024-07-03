@@ -29,6 +29,7 @@ class FavoritesController extends GetxController {
   void updateMediaType(final int index) {
     _selectedMediaTypes.fillRange(0, _selectedMediaTypes.length, false);
     _selectedMediaTypes[index] = true;
+    update();
   }
 
   void getFavorites() {

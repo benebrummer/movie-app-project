@@ -22,8 +22,8 @@ class FavoritesPage extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             Center(
-              child: Obx(
-                () {
+              child: GetBuilder<FavoritesController>(
+                builder: (controller) {
                   return ToggleButtons(
                     constraints: const BoxConstraints(
                       minHeight: 50.0,
@@ -32,9 +32,9 @@ class FavoritesPage extends StatelessWidget {
                     textStyle: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                     onPressed: (int index) {
-                      _favoritesController.updateMediaType(index);
+                      controller.updateMediaType(index);
                     },
-                    isSelected: _favoritesController.selectedMediaTypes,
+                    isSelected: controller.selectedMediaTypes,
                     children: List.of(
                         {const Text('Movies'), const Text('TV Shows')},
                         growable: false),
@@ -46,9 +46,11 @@ class FavoritesPage extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Obx(() => _favoritesController.selectedMediaTypes[0]
-                    ? FavoriteMovieGrid()
-                    : FavoriteSeriesGrid()),
+                child: Obx(
+                  () => _favoritesController.selectedMediaTypes[0]
+                      ? FavoriteMovieGrid()
+                      : FavoriteSeriesGrid(),
+                ),
               ),
             ),
             const SizedBox(height: 20),
