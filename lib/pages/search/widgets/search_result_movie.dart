@@ -110,8 +110,7 @@ class MovieResultItem extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        SizedBox(
-                          width: 100,
+                        Expanded(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
