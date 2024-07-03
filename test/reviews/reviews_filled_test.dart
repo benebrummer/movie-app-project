@@ -22,6 +22,21 @@ void main() {
         .thenAnswer((_) async => _createReviews());
   });
 
+  testWidgets('Review page is scrollable', (WidgetTester tester) async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    Get.find<ReviewController>().fetchReviews(1, MediaType.movie);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ReviewsPage(
+          title: 'test movie',
+        ),
+      ),
+    );
+    expect(find.byType(Scrollable), findsOneWidget);
+    await tester.drag(find.byType(ListView), const Offset(0.0, -5000.0));
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('Reviews page test with a list of reviews',
       (WidgetTester tester) async {
     TestWidgetsFlutterBinding.ensureInitialized();
@@ -34,12 +49,12 @@ void main() {
       ),
     );
     expect(find.text('Reviews: test movie'), findsOneWidget);
-    expect(find.byType(Scrollable), findsOneWidget);
-    final first = find.byType(ReviewListTile).first;
+    final beforeScroll = find.byType(ReviewListTile).first;
     await tester.drag(find.byType(ListView), const Offset(0.0, -5000.0));
     await tester.pumpAndSettle();
-    final last = find.byType(ReviewListTile).first;
-    expect(first, isNot(last));
+    final afterScroll = find.byType(ReviewListTile).first;
+    expect(find.byType(ReviewListTile), findsAtLeast(2));
+    expect(beforeScroll, isNot(afterScroll));
   });
 }
 
