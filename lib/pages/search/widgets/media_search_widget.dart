@@ -24,7 +24,6 @@ class MediaSearchWidget extends StatelessWidget {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     _textEditingController.clear();
-                    // controller.resetSearchQuery(); // TODO: maybe not necessary
                   },
                 ),
               ],

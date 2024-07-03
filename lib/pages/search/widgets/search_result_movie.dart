@@ -19,8 +19,6 @@ class MovieResultItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Keep style of search results or change it to match browse page
-    //  (e.g. just show image and title)
     return GestureDetector(
       onTap: () {
         _detailsController.initMovieDetails(movie.id);

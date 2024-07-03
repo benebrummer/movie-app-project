@@ -7,7 +7,6 @@ import '../../entity/media/review/review.dart';
 import '../../entity/media/series/tv_series.dart';
 
 abstract class TmdbRepository {
-  // TODO: check discover endpoint
   Future<Map<dynamic, dynamic>> searchMovie(final String query, final int page);
   Future<List<Movie>> getPopularMovies();
   Future<List<Movie>> getTopRatedMovies();
